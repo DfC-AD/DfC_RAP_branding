@@ -1,5 +1,5 @@
 ---
-title: "09 Useful Links Sub Report"
+title: "10 Useful Links Sub Report"
 output: html_document
 knit: (function(input, ...) {
     rmarkdown::render(
@@ -23,9 +23,7 @@ knitr::opts_chunk$set(
 
 library(here)
 
-source(paste0(here(), "/code/config.R"))
-source(paste0(here(), "/code/demo/demo_data_prep.R"))
-source(paste0(here(), "/code/demo/demo_config.R"))
+source(here("code/demo/demo_data_prep.R"))
 ```
 
 Some features may not work or be accessible in older browsers.
@@ -58,3 +56,4 @@ The [NISRA Accessibility Statement](https://datavis.nisra.gov.uk/dissemination/a
 
 [Office for National Statistics (ONS) - Style.ONS - A guide to writing about statistics](https://style.ons.gov.uk) - General style guide for writing about statistics. 'Web accessibility' section under 'Writing for the web' offers specifics around accessibility.
 
+[NISRA Dissemination Branch guidance on creating an accessible infographic](https://nicsonline.sharepoint.com/:w:/r/sites/TM-DOF-NISRATEAM/Shared%20Documents/Dissemination%20Team/Creating%20an%20Accessible%20Infographic.DOCX?d=wbfd3f8b30e7b4e7d872b2f25bc4538b3&csf=1&web=1&e=0020gi) - Guidance shared by NISRA Dissemination Branch on how to create an accessible infographic.

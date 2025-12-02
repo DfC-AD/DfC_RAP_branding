@@ -3,12 +3,10 @@
 library(here)
 
 # Creating spreadsheets
-source(paste0(here(), "/code/config.R"))
-source(paste0(here(), "/code/demo/demo_data_prep.R"))
-source(paste0(here(), "/code/demo/demo_config.R"))
+source(here("code/demo/demo_data_prep.R"))
 
 # naming output file
-output_file <- paste0("code/demo/demo_outputs/RAP_demo_tables.xlsx")
+output_file <- "code/demo/demo_outputs/RAP_demo_tables.xlsx"
 
 
 
@@ -127,8 +125,8 @@ t2_title <- paste0(
   "Table 2: Mid-year estimates of population aged under 25s ",
   "by Local Government District (LGD)"
 )
-t3a_title <- paste0("Population of young people by LGD in NI ", latest_year)
-t3b_title <- paste0("Population of elderly people by LGD in NI ", latest_year)
+t3a_title <- paste0("Population of young people by LGD in Northern Ireland ", latest_year)
+t3b_title <- paste0("Population of elderly people by LGD in Northern Ireland ", latest_year)
 notes_title <- "Notes table"
 
 # create a vector of table titles
@@ -234,13 +232,13 @@ sheet <- "Table_1"
 f_single_excel(
   title = t1_title,
   info = t1_info,
-  notes = t1_notes, # change to NA if no notes required
-  df = df_t1_ss,
-  sheet = sheet,
+  notes = t1_notes,
+  df = df_t1_ss, # df here means data frame - this is where the data is called for your excel sheet
+  sheet = "Table_1",
   tablename = "T_1",
-  num_cols = 2:5, # col numbers requiring thousand separator
-  pct_cols = NA
-) # col numbers of percentages with 1 decimal place
+  num_cols = 2:5,
+  pct_cols = integer(0)
+)
 
 
 setRowHeights(new_workbook, sheet = "Table_1", rows = 5, heights = 30)

@@ -12,9 +12,9 @@ knit: (function(input, ...) {
     )
   })
 ---
-  
-  
 
+
+  
 ```{r, include=FALSE}
 # this chunk sets chunk options for all chunks in this file
 knitr::opts_chunk$set(
@@ -23,13 +23,10 @@ knitr::opts_chunk$set(
 
 library(here)
 
-source(paste0(here(), "/code/config.R"))
-source(paste0(here(), "/code/demo/demo_data_prep.R"))
-source(paste0(here(), "/code/demo/demo_config.R"))
+source(here("code/demo/demo_data_prep.R"))
 ```
 
-
-This section has a number of basic tables. The Good Practice Team recommend that only small demonstration tables should be included in the publication itself. Demonstration tables are small tables which highlight one or two messages clearly and are supported by commentary.
+This section has a number of basic tables. The UK Analysis function guidance recommends that only small demonstration tables should be included in the publication itself. Demonstration tables are small tables which highlight one or two messages clearly and are supported by commentary.
 
 When it comes to accessibility, a good rule of thumb is to use a simple structure. Use a simple table matrix with a single row of column headers describing what is in each column. Other considerations are as follows:
 
@@ -47,11 +44,11 @@ When it comes to accessibility, a good rule of thumb is to use a simple structur
 
 ### Basic table (h3)
 
-#### Table 1: Mid Ulster had the highest proportion of under 25s (h4) {#table1 .tabset .tabset-pills}
+#### Table 1: Mid ulster had the highest proportion of under 25s (h4) {#table1 .tabset .tabset-pills} 
 
-**Select the tab to view population of young or elderly people.**
+<strong>Select the tab to view population of young or elderly people.</strong>
 
-##### 1a Population of young people by LGD 
+##### 1a Population of young people by LGD
  
 ```{r, echo = TRUE, warnings = FALSE, message = FALSE, out.width="100%"}
 # kable code needs to be created as a string to allow correct rendering of
@@ -82,10 +79,9 @@ kable(df_mye_latest_year_youthrate,
 ```
 Commentary describing the key messages you want readers to take from the table could go here.
 
-
 ##### 1b Population of elderly people by LGD
 
-```{r, echo = TRUE, warnings = FALSE, message = FALSE, out.width="100%"}
+```{r table_1, echo = TRUE, warnings = FALSE, message = FALSE, out.width="100%"}
 # kable code needs to be created as a string to allow correct rendering of
 # source code on fourth tab
 
@@ -117,9 +113,9 @@ Commentary describing the key messages you want readers to take from the table c
 
 ### Pagination (h3)
 
-#### Table 2: NI population is growing year on year (h4)
+#### Table 2: Northern Ireland population is growing year on year (h4)
 
-```{r, echo=TRUE, warning=FALSE, message=FALSE, out.width="100%"}
+```{r table_2, echo=TRUE, warning=FALSE, message=FALSE, out.width="100%"}
 datatable(df_mye_year_gender_t,
   # DT creates row numbers by default. Suppress to ensure all cols have a header
   rownames = FALSE,
@@ -143,9 +139,9 @@ datatable(df_mye_year_gender_t,
 Descriptive commentary to highlight key point from this table. Females outnumber males year on year and population growth is driven by both sexes
 
 ### Cross-tabulation (h3)
-#### Table 3: Under 25s were the largest age group in NI 
+#### Table 3: Under 25s were the largest age group in Northern Ireland 
 
-```{r, echo = TRUE, warnings = FALSE, message = FALSE, out.width="100%"}
+```{r table_3, echo = TRUE, warnings = FALSE, message = FALSE, out.width="100%"}
 cross_tab_data <- df_mye_latest_year_agegrp_gend %>%
   pivot_wider(names_from = gender, values_from = pop_total) %>%
   mutate(persons = Males + Females)
@@ -170,7 +166,7 @@ kable(cross_tab_data,
     "Number of females to every 100 males"
   ),
   # use caption for descriptive title
-  caption = paste0("NI population by broad age band and gender ", latest_year),
+  caption = paste0("Northern Ireland population by broad age band and sex ", latest_year),
 ) %>%
   kable_styling()
 ```
@@ -180,9 +176,10 @@ If we group the population into broad age bands we can compare the proportion of
 ### Table with colour scales
 #### Table 4: Belfast saw greatest increase in population from `r latest_year - 1` to `r latest_year`
 
-```{r, echo = TRUE, warnings = FALSE, message = FALSE, out.width="100%"}
+```{r table_4, echo = TRUE, warnings = FALSE, message = FALSE, out.width="100%"}
 # function to add thousand separator
 mycomma <- function(digits = 0) {
+  require(formattable)
   formatter("span", x ~ comma(x, digits = digits))
 }
 
@@ -199,7 +196,7 @@ t4 <- formattable(df_t4_html,
     `Change` = formatter("span",
       style = ~ style(
         color = ifelse(
-          `Change` > 0, "black", "red"
+          `Change` > 0, "black", "#e60000"
         )
       ),
       ~ icontext(ifelse(

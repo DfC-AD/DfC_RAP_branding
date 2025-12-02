@@ -2,25 +2,24 @@
 library(here)
 
 # Read config file
-source(paste0(here(), "/code/config.R"))
-
+source(here("code/config.R"))
 
 #### Read data in ####
 
 # Unhash as necessary (Ctrl + Shift + C)
 
 ## Read csv file
-# dfexample = read.csv(paste0(here(),
-#   "enter your data file here"))
+# dfexample = read.csv(here("enter your data file here"),
+# )
 
 
 ## Read xlsx file
-# dfexample <- read_excel(paste0(here(),"enter your data file here"),
+# dfexample <- read_excel(here("enter your data file here"),
 #                         sheet = "enter sheet name here")
 
 
 ## Read in SPSS (.sav) files
-# dfexample <- read.spss(paste0(here(), "enter file name here"),
+# dfexample <- read.spss(here("enter file name here"),
 #                          sheet = "Enter sheet name",
 #                          to.data.frame = TRUE)
 

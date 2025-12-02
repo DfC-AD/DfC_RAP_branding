@@ -2,36 +2,41 @@
 
 library(here)
 
-source(paste0(here(), "/code/config.R"))
-source(paste0(here(), "/code/demo/demo_config.R"))
+source(here("code/demo/demo_config.R"))
 
-df_myes <- read.csv(paste0(
-  here(),
-  "/code/demo/demo_data/local-government-districts-by-single-year-of-age-",
-  "and-gender-mid-2001-to-mid-2022.csv"
-)) %>%
+df_myes <- read.csv(
+  here("code/demo/demo_data/local-government-districts-by-single-year-of-age-and-gender-mid-2001-to-mid-2022.csv")
+) %>%
   rename(lgd2014name = Geo_Name, lgd2014 = Geo_Code)
 
 names(df_myes) <- tolower(names(df_myes))
 
-df_jbo <- read.csv(paste0(
-  here(),
-  "/code/demo/demo_data/JBO-vacancies-data.csv"
-))
+df_jbo <- read.csv(
+  here("code/demo/demo_data/JBO-vacancies-data.csv")
+)
 
+df_coc <- read_excel(
+  here(
+    "code/demo/demo_data/local-government-districts-components-of-population-change-mid-2001-to-mid-2023.xlsx"
+  ),
+  "Flat"
+)
 
 #### Creating variables for use in code and Rmd ####
 earliest_year <- min(df_myes$mid_year_ending)
 latest_year <- max(df_myes$mid_year_ending)
+prev_year <- latest_year - 1
+latest_fin_year <- paste0(latest_year - 1, "/", latest_year)
+prev_fin_year <- paste0(prev_year - 1, "/", prev_year)
 
 ni_earliest_total <- df_myes %>%
   filter(mid_year_ending == earliest_year & gender != "All persons" &
-    age != "All persons") %>%
+           age != "All persons") %>%
   summarise(sum(population_estimate)) / 1000000
 
 ni_latest_total <- df_myes %>%
   filter(mid_year_ending == latest_year & gender != "All persons" &
-    age != "All persons") %>%
+           age != "All persons") %>%
   summarise(sum(population_estimate)) / 1000000
 
 ni_earliest_latest_change <- (ni_latest_total / ni_earliest_total - 1) * 100
@@ -95,7 +100,7 @@ df_mye_latest_year_agegrp_gend <- df_myes %>%
   summarize(pop_total = sum(population_estimate))
 
 # latest_year pop with 5 age groups and gender
-df_mye_latest_year_5_age_grps_sex <- df_myes %>%
+df_mye_ltst_yr_5_age_grps_sex <- df_myes %>%
   filter(mid_year_ending == latest_year & gender != "All persons") %>%
   group_by(age_grp_5, gender) %>%
   summarize(pop_total = sum(population_estimate))
@@ -142,14 +147,14 @@ df_mye_latest_year_lgd_agegrp <- df_myes %>%
 # latest_year pop of under 25s by LGD
 df_mye_latest_year_under25_lgd <- df_myes %>%
   filter(mid_year_ending == latest_year & gender == "All persons" &
-    age_group == "0-24") %>%
+           age_group == "0-24") %>%
   group_by(lgd2014name) %>%
   summarize(under25_pop = sum(population_estimate))
 
 # latest_year pop of over 65s by LGD
 df_mye_latest_year_over65_lgd <- df_myes %>%
   filter(mid_year_ending == latest_year & gender == "All persons" &
-    age_group == "65plus") %>%
+           age_group == "65plus") %>%
   group_by(lgd2014name) %>%
   summarize(over65_pop = sum(population_estimate))
 
@@ -174,7 +179,7 @@ df_mye_latest_previous_lgd <- df_mye_latest_year_lgd %>%
   inner_join(df_mye_previous_year_lgd) %>%
   mutate(change = lgd_pop_total - lgd_pop_2021) %>%
   mutate(pct_change = round_half_up((lgd_pop_total - lgd_pop_2021) /
-    lgd_pop_2021 * 100, 1))
+                                      lgd_pop_2021 * 100, 1))
 
 # tidy column names for html
 df_t4_html <- df_mye_latest_previous_lgd %>%
@@ -239,7 +244,7 @@ df_mye_earliest_pop_lgd <- df_myes %>%
 # earliest_year pop of under 25s by LGD
 df_mye_earliest_under25_lgd <- df_myes %>%
   filter(mid_year_ending == earliest_year & gender == "All persons" &
-    age_group == "0-24") %>%
+           age_group == "0-24") %>%
   group_by(lgd2014name) %>%
   summarize(under25_pop = sum(population_estimate))
 
@@ -247,7 +252,7 @@ df_mye_earliest_under25_lgd <- df_myes %>%
 df_mye_earliest_youthrate <- df_mye_earliest_under25_lgd %>%
   inner_join(df_mye_earliest_pop_lgd) %>%
   mutate(earliest_youthrate = round_half_up(under25_pop /
-    earliest_pop * 100, 1))
+                                              earliest_pop * 100, 1))
 
 #### Excel data frame creation ####
 
@@ -325,6 +330,21 @@ df_fig6_xls <- pivot_wider(df_mye_latest_year_agegrp_gend,
   mutate(age_group = gsub("-", " to ", age_group)) %>%
   rename("Age group" = age_group)
 
+fig_15_data <- as.data.frame(state.x77) %>%
+  tibble::rownames_to_column("Local Government District") %>%
+  mutate(
+    `Natural Change (births minus deaths)` = round((`Life Exp` - 70) * 10, 1),
+    `Net Migration & Other Changes` = round((Income - mean(Income)) / 100, 1),
+    `Total Percentage Change` = `Natural Change (births minus deaths)` + `Net Migration & Other Changes`
+  ) %>%
+  arrange(`Total Percentage Change`)
+
+fig_15_data_filtered <- fig_15_data %>%
+  slice_head(n = 5) %>%
+  bind_rows(slice_tail(fig_15_data, n = 5))
+
+
+
 # tidy names for chart download
 df_fig8_xls <- bind_rows(df_latest_year_gender, df_earliest_year_gender) %>%
   rename(
@@ -333,14 +353,16 @@ df_fig8_xls <- bind_rows(df_latest_year_gender, df_earliest_year_gender) %>%
     "Population" = mye_pop
   )
 
-# fig 7 for download 
-df_fig7_xls <- df_mye_latest_5_agegroups %>% 
-  select(age_group, agegroup_total) %>% 
-  rename("Age Group" = age_group,
-         "Population" = agegroup_total)
+# fig 7 for download
+df_fig7_xls <- df_mye_latest_5_agegroups %>%
+  select(age_group, agegroup_total) %>%
+  rename(
+    "Age Group" = age_group,
+    "Population" = agegroup_total
+  )
 
 # construct df for basic treemap fig 9
-df_fig9 <- df_mye_latest_year_5_age_grps_sex %>%
+df_fig9 <- df_mye_ltst_yr_5_age_grps_sex %>%
   filter(gender == "Females") %>%
   ungroup()
 
@@ -374,11 +396,11 @@ df_fig10_xls <- df_fig10 %>%
 # fig 10 download
 fig11_xls <- df_mye_latest_year_agegroup %>%
   mutate(agegrp_pct = round_half_up((agegroup_total /
-    sum(agegroup_total) * 100), 1)) %>%
+                                       sum(agegroup_total) * 100), 1)) %>%
   rename(
     "Age group" = age_group, "Age group total" = agegroup_total,
     "Age group percent" = agegrp_pct
-  ) 
+  )
 
 #### Mini charts data frame creation for Key Points ####
 
@@ -442,7 +464,7 @@ minichart_population <- ggplot(
   )
 
 # save as png to import into report
-ggsave(paste0(here(), "/code/demo/demo_data/images/", "mini_population.png"),
+ggsave(here("code/demo/demo_data/images/mini_population.png"),
   plot = minichart_population, width = 6, height = 4
 )
 
@@ -452,10 +474,12 @@ ggsave(paste0(here(), "/code/demo/demo_data/images/", "mini_population.png"),
 # Simplified shapefile of NI councils.
 
 df_lgd_map <-
-  st_read(paste0(
-    here(),
-    "/code/demo/demo_data/maps/Simplified OSNI Map Loughs Removed.shp"
-  ), quiet = TRUE) %>%
+  st_read(
+    here(
+      "code/demo/demo_data/maps/Simplified OSNI Map Loughs Removed.shp"
+    ),
+    quiet = TRUE
+  ) %>%
   rename(lgd2014name = LGDNAME, lgd2014 = LGDCode)
 
 #### Create LGD data for maps ####
@@ -498,10 +522,9 @@ df_map_data <- merge(df_lgd_map, df_lgd_young) %>%
 
 # construct df for nested treemap fig 9 - SUT Data
 
-report_data <- loadWorkbook(paste0(
-  here(),
-  "/code/demo/demo_data/report_data.xlsx"
-))
+report_data <- loadWorkbook(
+  here("code/demo/demo_data/report_data.xlsx")
+)
 df_sut_report_data <- readWorkbook(report_data, sheet = "SUTs_report")
 df_sut_report_data_prev_year <-
   readWorkbook(report_data, sheet = "SUTs_report (prev ref year)")
@@ -513,7 +536,7 @@ fig9_industry_value <-
 
 fig9_main <- data.frame(fig9_industry, fig9_industry_value) %>%
   mutate(fig9_industryPercent = ((fig9_industry_value) /
-    sum(fig9_industry_value) * 100)) %>%
+                                   sum(fig9_industry_value) * 100)) %>%
   mutate(fig9_industryLabel = paste0(
     fig9_industry, ": ",
     round_half_up(fig9_industryPercent, 0), "%"
@@ -529,7 +552,7 @@ fig9new <- data.frame(
   fig9_sub_industry_value
 ) %>%
   mutate(Percent = ((fig9_sub_industry_value) /
-    sum(fig9_sub_industry_value)) * 100)
+                      sum(fig9_sub_industry_value)) * 100)
 
 industry_labels <- fig9_main %>%
   select(fig9_industry, fig9_industryLabel)
@@ -558,6 +581,18 @@ tmap_values_9_lab <- c(
   round_half_up(fig9$Percent, 2)
 )
 
+target_labels <- c(
+  "Distribution, transport, hotels and restaurants: 21%",
+  "Financial and insurance: 4%",
+  "Agriculture: 2%"
+)
+
+tmap_textcolours <- ifelse(
+  tmap_labels_9 %in% target_labels | tmap_parents_9 %in% target_labels,
+  "black",
+  "white"
+)
+
 industry_labels_dl <- fig9_main %>%
   select(fig9_industry, fig9_industry_value, fig9_industryPercent)
 
@@ -576,11 +611,11 @@ fig9_dl <- fig9_dl %>%
 
 # highest gva Industry - used to populate Figure 9 title
 highest_gva_industry <-
-  as.character(fig9_main[(as.numeric(1:nrow(fig9_main))
+  as.character(fig9_main[(as.numeric(seq_along(nrow(fig9_main)))
   [fig9_main[, 3] == max(fig9_main[
-      1:nrow(fig9_main),
-      3
-    ])]), 1])
+    seq_along(nrow(fig9_main)),
+    3
+  ])]), 1])
 
 ## Structure Report Figure 3 Previous year
 
@@ -591,7 +626,8 @@ fig9_industry_value_prev <-
 
 fig9_mainprev <- data.frame(fig9_industry_prev, fig9_industry_value_prev) %>%
   mutate(fig9_industryPercentprev = ((fig9_industry_value_prev) /
-    sum(fig9_industry_value_prev) * 100)) %>%
+                                       sum(fig9_industry_value_prev) *
+                                       100)) %>%
   mutate(fig9_industryLabelprev = paste0(
     fig9_industry_prev, ": ",
     round_half_up(
@@ -611,7 +647,7 @@ fig9newprev <- data.frame(
   fig9_sub_industry_value_prev
 ) %>%
   mutate(Percentprev = ((fig9_sub_industry_value_prev) /
-    sum(fig9_sub_industry_value_prev)) * 100)
+                          sum(fig9_sub_industry_value_prev)) * 100)
 
 industry_labels_prev <- fig9_mainprev %>%
   select(fig9_industry_prev, fig9_industryLabelprev)
@@ -657,3 +693,150 @@ colnames(fig9prev_dl) <- c(
 )
 fig9prev_dl <- fig9prev_dl %>%
   select(1, 5, 6, 2, 3, 4)
+
+#### Fig 12 population pyramid data frame creation
+
+fig_12_data <- df_myes %>%
+  group_by(mid_year_ending, gender, age) %>%
+  summarise(
+    MYE = sum(population_estimate),
+    .groups = "drop"
+  ) %>%
+  mutate(area_name = "NORTHERN IRELAND") %>%
+  select(area_name, everything()) %>%
+  filter(mid_year_ending %in% c(latest_year - 10, latest_year) &
+           gender != "All persons") %>%
+  arrange(desc(mid_year_ending), gender) %>%
+  mutate(MYE = case_when(
+    gender == "Females" ~ MYE * -1,
+    TRUE ~ MYE
+  )) %>%
+  pivot_wider(
+    id_cols = "age", names_from = c("gender", "mid_year_ending"),
+    names_sep = " ", values_from = "MYE"
+  ) %>%
+  rename("Age" = "age")
+
+fig_12_xl <- fig_12_data %>%
+  mutate(
+    across(matches("Females"), ~ . * -1),
+    across(-Age, ~ . / 1000)
+  ) %>%
+  rename_with(
+    ~ {
+      # Split column names into sex and year
+      sex_year <- str_match(., "^(Females|Males)\\s+(\\d{4})$")
+      sex <- sex_year[, 2]
+      year <- sex_year[, 3]
+
+      # Construct new name: Population (Thousands)\n{Sex} mid-{Year}
+      paste0("Population (Thousands)\n", sex, " mid-", year)
+    },
+    .cols = -Age
+  ) %>%
+  adorn_totals(name = "All Ages")
+
+#### Fig 13 components of change flow chart
+
+pop_ni_current <- df_coc %>%
+  filter(area_name == "NORTHERN IRELAND" &
+           category == "End population" & year == latest_fin_year) %>%
+  pull(MYE)
+
+pop_ni_last <- df_coc %>%
+  filter(area_name == "NORTHERN IRELAND" &
+           category == "End population" & year == prev_fin_year) %>%
+  pull(MYE)
+
+pop_ni_current_rounded <- prettyNum(round_half_up(pop_ni_current / 100) * 100,
+  big.mark = ","
+)
+
+pop_ni_last_rounded <- prettyNum(round_half_up(pop_ni_last / 100) * 100,
+  big.mark = ","
+)
+
+natural_change <- df_coc %>%
+  filter(area_name == "NORTHERN IRELAND" & year == latest_fin_year &
+           category == "Natural Change") %>%
+  pull("MYE")
+
+natural_change_rounded <- prettyNum(round_half_up(natural_change / 100) * 100,
+  big.mark = ","
+)
+
+natural_change_sign <- paste0(
+  if (natural_change > 0) "+",
+  natural_change_rounded
+)
+
+net_migration <- df_coc %>%
+  filter(area_name == "NORTHERN IRELAND" &
+           year == latest_fin_year & category == "Total Net") %>%
+  pull("MYE")
+
+net_migration_rounded <- prettyNum(round_half_up(net_migration / 100) * 100,
+  big.mark = ","
+)
+
+net_migration_sign <- paste0(
+  if (natural_change > 0) "+",
+  net_migration_rounded
+)
+
+other_changes <- df_coc %>%
+  filter(area_name == "NORTHERN IRELAND" &
+           year == latest_fin_year & category == "Other changes") %>%
+  pull("MYE")
+
+other_changes_rounded <- prettyNum(round_half_up(abs(other_changes) / 100)
+                                   * 100, big.mark = ",")
+
+other_changes_sign <- paste0(
+  if (other_changes > 0) "+" else "-",
+  other_changes_rounded
+)
+
+#### Fig 14 population change by age filled line chart
+
+year_minus_four <- latest_year - 4
+
+fig_14_data <- df_myes %>%
+  filter(
+    mid_year_ending %in% c(year_minus_four:latest_year),
+    gender == "All persons"
+  ) %>%
+  select(-gender, -age, -lgd2014, -age_group) %>%
+  group_by(mid_year_ending, age_grp_5) %>%
+  summarise(MYE = sum(population_estimate), .groups = "drop") %>%
+  mutate(
+    area_name = "NORTHERN IRELAND"
+  ) %>%
+  group_by(mid_year_ending) %>%
+  mutate(
+    total_mye_year = sum(MYE)
+  ) %>%
+  mutate(
+    pct = (MYE / total_mye_year) * 100
+  ) %>%
+  ungroup() %>%
+  select(area_name, everything()) %>%
+  arrange(age_grp_5) %>%
+  mutate(
+    index = row_number(),
+    label = case_when(
+      mid_year_ending %in% c(2018, 2022) ~ mid_year_ending,
+      TRUE ~ NA
+    )
+  )
+
+fig_14_data_xl <- fig_14_data %>%
+  mutate(
+    Year = mid_year_ending,
+    `Age Group` = case_when(
+      age_grp_5 == "85plus" ~ "85 and over",
+      TRUE ~ age_grp_5
+    ),
+    `Proportion of population (%)` = round_half_up(pct, 1),
+    .keep = "none"
+  )

@@ -6,12 +6,12 @@
 
 # Set Report parameters, name of department, pre release status and logo type
 
-nicstheme <- "dof"
-prerelease <- TRUE
+nics_theme <- "dof"
+prerelease <- FALSE
 bilingual <- TRUE
 
 ###### parameter options:
-#  nicstheme - can be any of teo, daera, dfc, de, dfe, dof, dfi, doh, doj, bso
+#  nics_theme - can be any of teo, daera, dfc, de, dfe, dof, dfi, doh, doj, bso
 #  prerelease - can be TRUE or FALSE
 #  bilingual - can be TRUE or FALSE - Sets language for NISRA Logo
 
@@ -20,8 +20,8 @@ bilingual <- TRUE
 # Set the report title and subtitle if required
 # THESE SHOULD BE UPDATED FOR EACH NEW PUBLICATION
 
-currentyear <- 2024
-title <- "NISRA Technology & Support Lab RAP Skeleton Demo Report"
+current_year <- 2024
+title <- "NISRA Technology and Support Lab RAP Skeleton Demo Report"
 subtitle <- "Version Two"
 
 ##### HEADER ######
@@ -43,7 +43,7 @@ next_pub_date <- "10 June 2025"
 # function and appear at the bottom of the report above the footer
 
 header_publisher <-
-  "Dissemination Branch, Northern Ireland Statistics & Research Agency"
+  "Dissemination Branch, Northern Ireland Statistics and Research Agency"
 lead_statistician <- "John Smith"
 header_telephone <- "028 XX XXXXXX"
 header_email <- "contact@nisra.gov.uk"
@@ -84,10 +84,14 @@ library(odbc)
 library(DBI)
 library(foreign)
 library(fontawesome)
+library(leaflet)
+library(english)
+library(knitr)
+library(lintr)
+library(styler)
 
 # turn off warning messages
 options(warn = -1)
-
 
 #### DERIVED TEXT ####
 
@@ -121,55 +125,65 @@ this_month <- pub_date - months(1)
 last_month <- pub_date - months(2)
 last_year <- pub_date - months(13)
 
+## Get date last updated time for the report
+
+last_updated <- Sys.Date()
+last_updated_formatted <- format(last_updated, "%d %B %Y")
 
 #### CONFIGURE FOLDER PATHS FOR DOWNLOAD BUTTONS #####
 
 # create folder for download button csv and excel files if it doesn't exist
-ifelse(!dir.exists(paste0(here(), "/outputs/")), dir.create(paste0(
-  here(),
-  "/outputs/"
-)), "output folder already exists")
-ifelse(!dir.exists(paste0(here(), "/outputs/", "figdata/")),
-  dir.create(paste0(here(), "/outputs/", "figdata/")),
+ifelse(!dir.exists(here("outputs")), dir.create(
+  here("outputs")
+), "output folder already exists")
+ifelse(!dir.exists(here("outputs/figdata")),
+  dir.create(here("outputs/figdata")),
   "figdata folder already exists"
 )
-
 
 #### NISRA COLOURS AND LOGOS ####
 ##### LOGOS #####
 
 # NISRA logo
 if (bilingual == TRUE) {
-  nisra_logo <- encodeURIComponent(paste0(
-    here(), "/data/images/",
-    "Bilingual white logo.svg"
-  ))
+  nisra_logo <-
+    here("data/images/nisra-only-white.svg")
 } else {
-  nisra_logo <- encodeURIComponent(paste0(
-    here(), "/data/images/",
-    "English only white logo.svg"
-  ))
+  nisra_logo <- here("data/images/nisra-only-white.svg")
 }
-nisra_alt <- "NISRA logo"
+
+nisra_logo <- paste0(
+  "data:image/svg+xml,",
+  readLines(nisra_logo) %>%
+    paste(collapse = " ") %>%
+    encodeURIComponent()
+)
+
+nisra_alt <- "NISRA logo, links to NISRA homepage"
 
 # Departmental logo
-dep_logo <- base64enc::dataURI(file = paste0(
-  here(), "/data/images/",
-  "dept_logos/logo-white-",
-  nicstheme, ".png"
-))
-dep_alt <- paste0(toupper(nicstheme), " logo")
-
-# Departmental link
-
+dep_logo <- encodeURIComponent(
+  paste0(
+    here(), "/data/images/dept_logos/logo-white-unstacked-",
+    nics_theme, ".svg"
+  )
+)
+dep_alt <- paste(toupper(nics_theme), "logo, links to ", toupper(nics_theme), "homepage")
 
 # Accredited Official Statistics logo
-acc_official_stats <- encodeURIComponent(paste0(
-  here(), "/data/images/",
-  "Accredited Official Statistics Logo English.svg"
-))
+acc_official_stats <- paste0(
+  "data:image/svg+xml,",
+  readLines(here(
+    "data/images",
+    "Accredited_Official_Statistics_Logo_English.svg"
+  )) %>%
+    paste(collapse = " ") %>%
+    encodeURIComponent()
+)
+
 nat_alt <- "Accredited Official Statistics logo"
 
+rel_path <- paste0(here("data", "images"), "/")
 
 ##### COLOURS #####
 nisra_green_decoration <- "#CEDC20"
@@ -178,6 +192,12 @@ nisra_navy <- "#00205b"
 nisra_col3_green <- "#68a41e" # needs black text
 nisra_col4_purple <- "#732777"
 nisra_col5_lilac <- "#ce70d2" # needs black text
+nisra_col6_olive <- "#434700"
+nisra_col7_brown <- "#A88F8F"
+nisra_col8_slate <- "#3b3b3b"
+nisra_col9_pink <- "#e64791"
+nista_col10_burgandy <- "#400b23"
+  
 
 ons_blue <- "#12436d"
 ons_green <- "#28a197"
@@ -185,8 +205,8 @@ ons_red <- "#801650"
 ons_orange <- "#f46a25"
 
 #### CALL & LOAD FUNCTIONS SCRIPTS ####
-for (file in list.files(path = paste0(here(), "/code/", "functions"))) {
-  source(paste0(here(), "/code/", "functions/", file))
+for (file in list.files(path = here("code/functions"))) {
+  source(here("code/functions", file))
 }
 
 utils::globalVariables(c("new_workbook", ".", "report_final"))

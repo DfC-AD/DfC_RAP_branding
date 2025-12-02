@@ -23,15 +23,12 @@ knitr::opts_chunk$set(
 
 library(here)
 
-source(paste0(here(), "/code/config.R"))
-source(paste0(here(), "/code/demo/demo_data_prep.R"))
-source(paste0(here(), "/code/demo/demo_config.R"))
+source(here("code/demo/demo_data_prep.R"))
 ```
-
 
 This section includes a static map and an interactive map. If you create a map in another package and import as an image, ensure it meets accessibility requirements for an infographic.
 
-### Static Map (h3)
+### Static map (h3)
 
 This section includes a map generated in R. General principles to consider are:
 
@@ -49,9 +46,13 @@ Ensure the data underlying the maps is accessible to users who cannot perceive i
 
 Include descriptive text before or after the map.
 
-#### Map 1: Proportion of people aged under 25 in NI by LGD
+#### Map 1: Proportion of people aged under 25 in Northern Ireland by LGD
 
 ```{r map_static, echo = TRUE, warnings = FALSE, message = FALSE, fig.alt="Map of Northern Ireland shaded by percentage of under 25s living in each Local Government District. More detail on the trends are included in the text directly above or below the map", out.width="100%"}
+
+df_map_data$xmod <- c(0.8, 0, 0, 0.5, 0, 1.1, 0.5, 0.5, 0, 1, -1)
+df_map_data$ymod <- c(-0.5, 0, 0.2, 0.3, 0, 0, 1.4, -0.55, 0.3, 0, -1)
+
 map1_static_map <- tm_shape(df_map_data,
   # Default is km
   unit = "imperial"
@@ -79,18 +80,18 @@ map1_static_map <- tm_shape(df_map_data,
     size = 0.8,
     col = "#000000",
     auto.placement = FALSE,
-    xmod = c(0.8, 0, 0, 0.5, 0, 1.1, 0.5, 0.5, 0, 1, -1),
-    ymod = c(-0.5, 0, 0.2, 0.3, 0, 0, 1.4, -0.5, 0.3, 0, -1)
+    xmod = "xmod",
+    ymod = "ymod"
   ) +
   tm_add_legend("fill",
-    col = RColorBrewer::brewer.pal(3, "Blues"),
+    fill = RColorBrewer::brewer.pal(3, "Blues"),
     border.col = "#454A58",
     labels = c("26.6  to 29.5", "29.6 to 31.5", "31.6 to 33.5"),
     title = "Percentage of under 25s"
   ) +
   tm_add_legend( # add manual legend as a key
     "symbol",
-    col = "#00205b",
+    fill = "#00205b",
     title = "Key",
     labels = c(
       "AN = Antrim and Newtownabbey",
@@ -100,9 +101,9 @@ map1_static_map <- tm_shape(df_map_data,
   ) +
   tm_format( # setting format to worldwide creates a wider rectangle shape that
     # fits width of page
-    "World_wide",
-    legend.position = c("left", "top")
-  )
+    "World_wide"
+  ) +
+  tm_layout(legend.position = c("left", "top"))
 
 # Plotting map:
 tmap_mode("plot") # Set to "view" for interactive map or "plot" for static
@@ -110,8 +111,7 @@ tmap_mode("plot") # Set to "view" for interactive map or "plot" for static
 map1_static_map
 ```
 
-
-### Interactive Maps (h3)
+### Interactive maps (h3)
 
 This section shows the same map produced as an interactive plot.
 The figures are displayed on the map, council names show on hover and the council name and figures display on click.
@@ -125,20 +125,25 @@ Include descriptive text before or after the map.
 
 #### Map 2: Interactive shapefile map with hover text
 
-```{r map_interactive_1, echo = TRUE, warnings = FALSE, message = FALSE, fig.alt="alt text for interactive map", fig.cap="caption for interactive map", out.width="100%"}
+```{r map_interactive_1, echo = TRUE, warnings = FALSE, message = FALSE, fig.alt="Map of Northern Ireland shaded by percentage of under 25s living in each Local Government District. More detail on the trends are included in the text directly above or below the map", out.width="100%"}
 # Reduce the size of the shapefile using the simplify command in rmaptools.
 
 
 #### interactive map ####
 
+# df_map_data$xmod <- c(3, 1, 0, 1.5, 0, 1.5, 0, 0, 0, 1, 1)
+# df_map_data$ymod <- c(0, 3, 0, 0, 0, 0, 1, 0, 0, 0, -3)
+
+df_map_data$xmod <- c(0, -1.5, 0, -1.1, 0, 0, 0, -1, 0, 0, -1)
+df_map_data$ymod <- c(0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -1)
+
 map2_interactive_map <- tm_shape(
   df_map_data %>%
-    select(lgd2014name, lgd_young_perc, map_label_value_only),
+    select(lgd2014name, lgd_young_perc, map_label_value_only, ymod, xmod),
   name = "Show data",
   # Default is km
   unit = "imperial"
 ) +
-
   tm_basemap( # Adds background map.
     "Esri.WorldGrayCanvas"
   ) +
@@ -157,7 +162,7 @@ map2_interactive_map <- tm_shape(
     popup.vars = c("Percentage of under 25s: " = "lgd_young_perc")
   ) +
   tm_add_legend("fill",
-    col = RColorBrewer::brewer.pal(3, "Blues"),
+    fill = RColorBrewer::brewer.pal(3, "Blues"),
     border.col = "#454A58",
     labels = c("26.6  to 29.5", "29.6 to 31.5", "31.6 to 33.5"),
     title = "Percentage of under 25s"
@@ -189,8 +194,8 @@ map2_interactive_map <- tm_shape(
     size = 1.2,
     col = "#000000",
     auto.placement = FALSE,
-    xmod = c(3, 1, 0, 1.5, 0, 1.5, 0, 0, 0, 1, 1),
-    ymod = c(0, 3, 0, 0, 0, 0, 1, 0, 0, 0, -3)
+    xmod = "xmod",
+    ymod = "ymod"
   ) +
   tm_scale_bar(width = 250) +
   tmap_mode( # Set to "view" for interactive map or "plot" for static
@@ -203,7 +208,6 @@ map2_interactive_map
 # section for additional configurations
 ```
 
-
 #### Map 3: Interactive point map with zoom and hover text  {#map3 .tabset .tabset-pills}
 
 Map 3 shows another example of an interactive map that plots specific points instead of using a shapefile. This map uses a data-set containing information on the location of benefits offices (JBO) and the number of available vacancies.
@@ -214,8 +218,7 @@ The data underlying the map is available to view and download in a tab for users
 
 ##### Map (interactive) output
 
-```{r map_interactive_2, echo = TRUE, warnings = FALSE, message = FALSE, fig.alt="alt text for interactive map", fig.cap="caption for interactive map", out.width="100%"}
-library(leaflet)
+```{r map_interactive_2, echo = TRUE, warnings = FALSE, message = FALSE, fig.alt="Map of Northern Ireland with points showing the location of benefits offices (JBO) and the number of available vacancies. More detail on the trends are included in the text directly above or below the map", out.width="100%"}
 
 #### interactive map ####
 
@@ -246,10 +249,6 @@ map3_interactive_map <- addCircleMarkers(
 
 map3_interactive_map
 
-
-
-
-
 df_jbo <- df_jbo[1:2]
 ```
 
@@ -257,12 +256,11 @@ df_jbo <- df_jbo[1:2]
 ```{r}
 f_make_tables(
   data = df_jbo,
-  title = "Map3_Data",
+  title = "Map 3 Data",
   data_style = ns_comma,
-  data_dir = paste0(here(), "/code/demo/demo_outputs/", "figdata/")
+  data_dir = here("code/demo/demo_outputs/figdata")
 )
 ```
-
 
 ##### Map (interactive) data
 
@@ -273,14 +271,13 @@ kable(df_jbo)
 ```{r}
 f_make_tables(
   data = df_jbo,
-  title = "Map3_Data",
+  title = "Map 3 Data",
   data_style = ns_comma,
-  data_dir = paste0(here(), "/code/demo/demo_outputs/", "figdata/")
+  data_dir = here("code/demo/demo_outputs/figdata")
 )
 ```
 
-
-```{r alt text for maps, echo = FALSE}
+```{r alt_text_for_maps, echo = FALSE}
 # Alt text values for tabRemove() function in the interactive map
 map_alt <- paste0(
   df_map_data$lgd2014name, " ",
@@ -289,5 +286,3 @@ map_alt <- paste0(
 map_alt <- paste(map_alt, collapse = '", "')
 map_alt <- paste0('["', map_alt, '"]')
 ```  
-
-#### {-}

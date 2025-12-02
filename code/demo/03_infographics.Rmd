@@ -14,7 +14,7 @@ knit: (function(input, ...) {
 ---
   
   
-
+  
 ```{r, include=FALSE}
 # this chunk sets chunk options for all chunks in this file
 knitr::opts_chunk$set(
@@ -23,13 +23,17 @@ knitr::opts_chunk$set(
 
 library(here)
 
-source(paste0(here(), "/code/config.R"))
-source(paste0(here(), "/code/demo/demo_data_prep.R"))
-source(paste0(here(), "/code/demo/demo_config.R"))
+source(here("code/demo/demo_data_prep.R"))
 ```
+An image should not replace a clear text description so ensure any information presented in an infographic is presented elsewhere. Add descriptive alt text for anyone using a screen reader - even images with no substantive content should have empty alt text added to indicate that they are decorative. 
 
+Do not use images that only contain text - images can contain explanatory text but should never exclusively be of text. Use real text and style appropriately instead.
 
-An image should not replace a clear text description so ensure any information presented in an infographic is presented elsewhere. Add alt text for anyone using a screen reader. For more specific guidance about accessible infographics refer to Dissemination Branch document 'Creating an accessible infographic'. For more general guidance you can also refer to [Government Statistical Service (GSS) guidance on infographics](https://gss.civilservice.gov.uk/policy-store/infographics/) but note that as of 20/8/21 it does not include accessibility requirements.
+The reading order of an infographic should always be left-to-right.
+
+For more specific guidance about accessible infographics refer to Dissemination Branch document 'Creating an accessible infographic'. For more general guidance you can also refer to [Government Statistical Service (GSS) guidance on infographics](https://gss.civilservice.gov.uk/policy-store/infographics/) but note that as of the 20th of August 2021 it does not include accessibility requirements.
+
+Important note: If SVG images are used for images these should be marked up properly. It is important that all text is clear on these images and are properly tested for accessibility. If there are still issues with the screen reader reading text within an SVG image, it is recommended to use a PNG image format instead.
 
 ### Type the title of infographic here (h3)
 
@@ -39,4 +43,3 @@ knitr::include_graphics("../demo/demo_data/images/PopInfographic.png")
 ```
 
 Source: 2019 Mid-year population estimates
-

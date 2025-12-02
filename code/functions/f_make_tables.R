@@ -1,8 +1,20 @@
+# ##############################################################################
+# f_make_tables.R
+# Creates downloadable CSV and Excel files from data frames with formatted  
+# tables, generates download buttons for embedding in report
+# #############################################################################
+
+
 f_make_tables <- function(data,
                           title,
                           footnotes = NA,
                           data_style = ns_comma,
-                          data_dir = paste0(here(), "/outputs/", "figdata/")) {
+                          data_dir = here("outputs/figdata")) {
+  require(openxlsx)
+  require(janitor)
+  require(htmltools)
+  require(xfun)
+
   # Sheet name for excel is generated as everything before the : in title
   sheet <- gsub("(.*):.*", "\\1", title)
 
@@ -86,7 +98,7 @@ f_make_tables <- function(data,
   addStyle(wb,
     sheet = as.character(sheet),
     style = la,
-    rows = r + 1:nrow(data),
+    rows = r + seq_len(nrow(data)),
     cols = 1,
     gridExpand = TRUE
   )
@@ -95,7 +107,7 @@ f_make_tables <- function(data,
   addStyle(wb,
     sheet = as.character(sheet),
     style = data_style,
-    rows = r + 1:nrow(data),
+    rows = r + seq_len(nrow(data)),
     cols = 2:ncol(data),
     gridExpand = TRUE
   )
@@ -135,21 +147,36 @@ f_make_tables <- function(data,
     )
   )
 
-  div(
+  buttons <- div(
     div(
       class = "row", style = "display: flex;",
       div(class = "row-indent"),
       div(class = "download", "Download data: ")
     ),
     div(
-      class = "row", style = "display: flex;",
+      class = "row", style = c("display: flex;", "flex-wrap: wrap"),
       div(class = "row-indent"),
       div(class = "csv-button2", em_csv),
-      div(class = "download", style = "padding-top: 7px; padding-left: 5px;
-          padding-right: 5px;"),
+      div(
+        class = "download",
+        style = "padding-top: 7px; margin-top: 40px; padding-left: 5px;
+          padding-right: 5px;"
+      ),
       div(class = "xl-button2", em_xl),
       div(class = "download", style = "padding-top: 7px; padding-left: 5px;
           padding-right: 5px;")
     )
   )
+
+  # Test html output to ensure correct format (no unformatted html
+  # strings appearing in output)
+  if (grepl("&lt;", buttons)) {
+    buttons <- gsub("&lt;", "<", buttons) %>%
+      # Remove escape characters and insert proper < > characters
+      gsub("&gt;", ">", .)
+
+    HTML(buttons) # Re-format as HTML string
+  } else { # Else render as normal
+    buttons
+  }
 }

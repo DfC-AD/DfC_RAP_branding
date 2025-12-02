@@ -1,5 +1,5 @@
 ---
-title: "08 Text Presentation Sub  Report"
+title: "09 Text Presentation Sub Report"
 output: html_document
 knit: (function(input, ...) {
     rmarkdown::render(
@@ -23,9 +23,7 @@ knitr::opts_chunk$set(
 
 library(here)
 
-source(paste0(here(), "/code/config.R"))
-source(paste0(here(), "/code/demo/demo_data_prep.R"))
-source(paste0(here(), "/code/demo/demo_config.R"))
+source(here("code/demo/demo_data_prep.R"))
 
 ```
 
@@ -35,14 +33,14 @@ This section includes a quote, more subheading levels, unordered lists, ordered 
 
 <!-- coloured definiton boxes -->
 <p class="defboxes">
-  <font color = `r nisra_navy`>__Mid Year Estimates:__    
+  <font color = `r nisra_navy`><strong>Mid Year Estimates:</strong>    
     In June each year NISRA prepares data on the size of the Northern Ireland population and includes statistics on a range of administrative and statistical geographies. A style like this could be used for definitions or for emphasis.
   </font>
 </p> 
 
 ### Administrative geographies (h3)
 
-#### Local Government Districts (h4)
+#### Local government districts (h4)
 
   1. Antrim and Newtownabbey (no ampersand).
   2. Ards and North Down.
@@ -56,14 +54,14 @@ This section includes a quote, more subheading levels, unordered lists, ordered 
   10. Mid Ulster.
   11. Newry, Mourne and Down.
 
-#### Health and Social Care Trusts (h4)
+#### Health and social care trusts (h4)
 
   1. Belfast HSC Trust.
   2. South Eastern HSC Trust.
   3. Western HSC Trust.
   4. Southern HSC Trust.
   5. Northern HSC Trust.
-  6. NI Ambulance Service.
+  6. Northern Ireland Ambulance Service.
 
 ### Statistical geographies (h3)
 
@@ -71,12 +69,12 @@ This section includes a quote, more subheading levels, unordered lists, ordered 
   * Super Output Areas.
   * Census Small Areas.
 
-### Former administrative and statistical geographies (h3)
+### Former administrative and statistical geographies (h3) 
 
   -	Parliamentary Constituencies (Assembly Areas). 
-  -	Health & Social Care Trusts. 
-  -	The former Education & Library Boards. 
-  -	The former Health & Social Services Boards.
+  -	Health and Social Care Trusts. 
+  -	The former Education and Library Boards. 
+  -	The former Health and Social Services Boards.
   - The former NUTS-III areas. 
   -	The former 582 Electoral Wards.
 
@@ -84,13 +82,56 @@ Bullets following a heading start with a capital letter, finish with a full stop
 
 Bullets as a list within the text should always have a lead-in line, start in lowercase (unless it starts with a proper noun), don't have full stops within bullets or at the end. For more guidance see the [ONS punctuation guide](https://style.ons.gov.uk/category/house-style/punctuation/#bullet-points).
 
+### Accordions
+
+Notes can be stored in accordions, as shown below. This can be useful to reduce clutter in your HTML and allow users to access notes when needed.
+
+```{r results='asis', echo = TRUE}
+htmltools::HTML("
+<div class='accordion'> 
+  <button class='accordion-toggle' aria-expanded='false' 
+          aria-controls='panel1' id='accordion1'> 
+    Local Government Districts 
+    <span class='accordion-arrow'>▶</span>
+  </button> 
+  <div class='accordion-panel' id='panel1' role='region' 
+       aria-labelledby='accordion1' hidden> 
+
+    <ul>
+      <li>Antrim and Newtownabbey (no ampersand).</li>
+      <li>Ards and North Down.</li>
+      <li>Armagh City, Banbridge and Craigavon.</li>
+      <li>Belfast.</li>
+      <li>Causeway Coast and Glens.</li>
+      <li>Derry and Strabane.</li>
+      <li>Fermanagh and Omagh.</li>
+      <li>Lisburn and Castlereagh.</li>
+      <li>Mid and East Antrim.</li>
+      <li>Mid Ulster.</li>
+      <li>Newry, Mourne and Down.</li>
+    </ul>
+
+  </div> 
+</div> 
+
+<script> 
+document.getElementById('accordion1').addEventListener('click', function() { 
+  var expanded = this.getAttribute('aria-expanded') === 'true'; 
+  this.setAttribute('aria-expanded', !expanded); 
+  var panel = document.getElementById(this.getAttribute('aria-controls')); 
+  panel.hidden = expanded; 
+}); 
+</script>
+")
+```
+
 ### Hyperlinks (h3)
 
 When creating a hyperlink, do not use the url. Instead, create link text that describes the link destination and if appropriate a file type and size. If linking to a data download, we are advising against linking directly to the actual file, instead link to the publication page. If linking directly to the file you have to include the file type and size in the link text and tell users if it opens in a new window. The colour of hyperlinks in this demo report were changed in the cascading style sheets (CSS) because the default colour was too low contrast to meet accessibility standards. 
 
 #### Examples of adding links (h4)
 
-For a link that opens in the same window, in the R code simply give the link a relevant name in square brackets and add the link url in brackets immediately after. For accessibility it is recommended that links open in the same window/tab in so far as possible.  
+For a link that opens in the same window, in the R code simply give the link a relevant name in square brackets and add the link url in brackets immediately after. For accessibility it is recommended that links open in the same window in so far as possible.  
 
 [NISRA - 2022 Mid Year Population Estimates for Northern Ireland](https://www.nisra.gov.uk/publications/2022-mid-year-population-estimates-northern-ireland)  
 
@@ -106,7 +147,6 @@ Where a link will open in a new window the "(opens in a new window)" text should
 ```{r, echo = TRUE, eval = FALSE}
 [NISRA - 2022 Mid Year Population Estimates for Northern Ireland (opens in a new window) `r fa("arrow-up-right-from-square")`](https://www.nisra.gov.uk/publications/2022-mid-year-population-estimates-northern-ireland){target="_blank"}
 ```
-  
   
 Where a link takes the user directly to a download or file the link text should have file type and size included as below.  
 

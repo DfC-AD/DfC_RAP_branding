@@ -1,3 +1,10 @@
+# ##############################################################################
+# Styles.R
+# Defines consistent Excel styles for reports including headers, numbers, 
+# alignment, borders and formatting used across workbook generation functions
+# #############################################################################
+
+
 # Styles for Page titles
 pt <- createStyle(
   textDecoration = "bold",
@@ -12,6 +19,24 @@ ch <- createStyle(
   valign = "bottom",
   wrapText = TRUE,
   textDecoration = "bold"
+)
+
+ch_lined <- createStyle(
+  halign = "right",
+  valign = "bottom",
+  wrapText = TRUE,
+  textDecoration = "bold",
+  border = "TopBottom",
+  borderStyle = c("thin", "double")
+)
+
+ch_lined_left <- createStyle(
+  halign = "left",
+  valign = "bottom",
+  wrapText = TRUE,
+  textDecoration = "bold",
+  border = "TopBottom",
+  borderStyle = c("thin", "double")
 )
 
 # Style for column header (left aligned)
@@ -36,6 +61,19 @@ ns <- createStyle(
   halign = "right"
 )
 
+ns_bold <- createStyle(
+  numFmt = "#,##0",
+  halign = "right",
+  textDecoration = "bold"
+)
+
+ns_italic <- createStyle(
+  numFmt = "#,##0",
+  halign = "right",
+  textDecoration = "italic",
+  border = "TopBottom",
+  borderStyle = c("thin", "thin")
+)
 
 # Style for decimal numbers
 nsd <- createStyle(
@@ -54,6 +92,11 @@ ns_percent <- createStyle(
   halign = "right"
 )
 
+num_resp <- createStyle(
+  textDecoration = c("bold", "italic"),
+  border = "TopBottom",
+  borderStyle = c("thin", "thin")
+)
 
 # Style to right align cells
 ra <- createStyle(halign = "right")
@@ -93,4 +136,20 @@ hs2 <- createStyle(
 ts <- createStyle(
   textDecoration = "bold",
   fontSize = 14
+)
+
+# Size 12 bold style
+s12_bold <- createStyle(
+  textDecoration = "bold",
+  fontSize = 12,
+  halign = "left"
+)
+
+grey <- createStyle(
+  fgFill = "#D9D9D9"
+)
+
+# White text
+wt <- createStyle(
+  fontColour = "#ffffff"
 )

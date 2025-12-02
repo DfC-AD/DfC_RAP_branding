@@ -139,6 +139,20 @@ Department of Infrastructure:
  #7eb0d3 
  
  ---------------------------------------------------------------------
+        
+  ADR:
+        
+  1 # banner background                      #00205B
+  2 # banner background bottom border        #6bbbae
+  3 # a:link                                 #9900cc
+  4 # h1, h2, h3                             #178573
+  5 # 3-bar line break - colours #1          #188C78
+  6 # 3-bar line break - colours #2          #0B3142
+  7 # 3-bar line break - colours #3          #999999
+         
+ ---------------------------------------------------------------------
+ 
+ ---------------------------------------------------------------------
 
  Template:
 
@@ -187,12 +201,6 @@ Department of Infrastructure:
   --nics-chart-light: var(--nics-banner-highlight);
 }
 
-
-
-
-
-
-
 [data-nics-theme=teo] {
   --nics-banner-highlight: #7bafd4;
   --nics-three-bar-colour-2: var(--nics-banner-highlight);
@@ -237,12 +245,26 @@ Department of Infrastructure:
   --nics-three-bar-colour-2: var(--nics-banner-highlight);
 }
 
+[data-nics-theme=adr] {
+  --nics-banner-highlight: #6BBBAE; 
+  --nics-headings-h1-h2-h3: #178573; 
+  --nics-three-bar-colour-1: #188C78;
+  --nics-three-bar-colour-2: #0B3142;
+  --nics-three-bar-colour-3: #999999
+}
+
 /* [data-nics-theme=bso] {
 } */
 
 body {
   background-color: #FFFFFF;
   color: #000000;
+}
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  line-height: 1.5;           /* better readability than 1.0 */
+  font-weight: 400;
 }
 
 p, li, td, th {
@@ -294,7 +316,8 @@ a:hover {
   color: var(--nics-links-hover);
 }
 
-a:focus{
+a:focus,
+button:focus {
   outline: 2px solid red;
 }
 
@@ -345,6 +368,15 @@ a:focus{
 .row {
   margin: 0px;
 } 
+
+.div-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Or center/start as needed */
+  align-items: center; /* ✅ Prevents vertical stretching */
+  gap: 1rem;
+  margin-bottom: 25px;
+}
 
 /* Indents First NISRA logo from left */
 .left {
@@ -448,6 +480,23 @@ a:focus{
   font-size: 18px;
 }
 
+.nav-pills {
+  background: white !important;
+}
+
+.nav-pills > li > a {
+  background: white !important;
+  color: nisra_blue !important;
+  border: 1px solid #ddd;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:focus,
+.nav-pills > li.active > a:hover {
+  background: #f8f9fa !important;
+  color: #000 !important;
+}
+
 
 
 /* Boxes for definitions */
@@ -520,7 +569,6 @@ ul.tocify-subheader.list-group {
   }
 }
 
-
 .prerelease-stripes {
   background: repeating-linear-gradient(
     -45deg,
@@ -557,7 +605,6 @@ ul.tocify-subheader.list-group {
 .plot-container.plotly {
   page-break-inside: avoid;
 }
-
 
 
 	footer {
@@ -726,4 +773,263 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
 .mtb {
 	margin-top: 10px;
 	margin-bottom: 20px;
+}
+
+#add-annotation-button {
+	position: fixed;
+	bottom: 55px;
+	right: 10px;
+	padding: 10px;
+	background-color: #68a41e;
+	color: #00205b;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	z-index: 9999;
+}
+#save-annotations-button {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	padding: 10px;
+	background-color: #3878c5;
+	color: #00205b;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	z-index: 9999;
+}
+
+.ybaannotation {
+	position: absolute;
+	background-color: #CEDC20;
+	border: 2px solid #000;
+	border-radius: 5px;
+	padding: 10px;
+	z-index: 9999;
+	cursor: move;
+}
+.ybaannotation input {
+	width: 100%;
+}
+
+.navy-box {
+  display: flex;
+  background-color: #E7EAF1;
+  border-radius: 25px;
+  border: 2px solid #00205b;
+  font-weight: normal !important;
+  border-radius: 25px;
+  text-align: center;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;        /* Fill available row height */
+  box-sizing: border-box;
+}
+
+
+.green-circle,
+.blue-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #D0E7A6; /* or your blue */
+  border: 2px solid #68a41e;
+  border-radius: 50%;
+  text-align: center;
+
+  aspect-ratio: 1 / 1;
+  width: 120px;      /* ✅ Fix width */
+  max-width: 15vw;   /* ✅ Responsive cap (optional) */
+  min-width: 100px;  /* ✅ Prevent shrinking too small */
+  flex-shrink: 0;    /* ✅ Don’t compress under pressure */
+}
+
+.green-circle a,
+.blue-circle a {
+  color: #000080;/* optional */
+}
+
+.green-circle a:hover,
+.blue-circle a:hover {
+  color: #800080;/* optional */
+}
+
+.blue-circle {
+  background-color: #C7DDF0;
+  border: 2px solid #3878c5;
+}
+
+.arrow {
+    clip-path: polygon(0% 30%, 60% 30%, 60% 0%, 100% 50%, 60% 100%, 60% 70%, 0% 70%);
+    background-color: #888;
+    height: 3em;
+    width: 75px;
+}
+
+.align-middle {
+  display: flex;
+  align-items: center;
+}
+
+/* Accordion styles */ 
+.accordion { 
+  margin-bottom: 2em; 
+} 
+
+.accordion-toggle { 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%; 
+  text-align: left; 
+  background: #e7eaf1; 
+  color: #3878c5; 
+  border: none; 
+  outline: none; 
+  padding: 1em; 
+  font-size: 1.3em;
+  font-weight: bold;
+  cursor: pointer; 
+  border-bottom: 1px solid #ccc; 
+  transition: background 0.2s; 
+} 
+
+.accordion-toggle:hover {
+  background: #dfe3ec;
+}
+
+.accordion-toggle {
+  color: navy;
+}
+
+.accordion-panel { 
+  padding: 1em; 
+  background: #f9f9fa;
+  border-bottom: 1px solid #ccc; 
+} 
+
+.accordion-arrow {
+  font-size: 1.1em;
+  transition: transform 0.3s ease;
+}
+
+.accordion-toggle[aria-expanded="true"] .accordion-arrow {
+  transform: rotate(90deg);
+}
+
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ===========================
+   Footer
+   =========================== */
+/* Footer wrapper */
+/* Footer wrapper */
+.nisra-footer {
+  background-color: #002147;
+  color: #fff;
+  border-top: 4px solid #3878c5;
+  padding: 2rem 0;
+  margin-top: auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Headings */
+.footer-col h5 {
+  margin-bottom: 1rem;
+  font-size: 22px;   /* largest */
+  font-weight: bold;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Column links (medium size) */
+.footer-list a {
+  font-size: 14px;  /* medium */
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Bottom legal links */
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;     /* ✅ allows wrapping on small screens */
+  gap: 0.75rem;
+  font-size: 12px;   /* smaller than column links */
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li {
+  white-space: nowrap; /* each item stays intact */
+}
+
+.footer-links a {
+  color: #fff;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+/* Layout */
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer-col {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Reset lists */
+.nisra-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-list li {
+  margin: 0 0 0.5rem 0;
+}
+
+/* Social icons */
+.nisra-footer .footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.nisra-footer .footer-social img {
+  width: 32px;
+  height: 32px;   /* force a square for consistency */
+  object-fit: contain;
+  display: inline-block;
+  transition: box-shadow 0.2s ease, border 0.2s ease;
+}
+
+.nisra-footer .footer-social img:hover {
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(255,255,255,0.6);
+  border-radius: 4px;
 }

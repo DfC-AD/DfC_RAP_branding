@@ -8,16 +8,21 @@ output:
     toc_depth: 4
     code_download: no
     css: "style.css"
+    includes:
+      in_header: "meta.html"
 knit: (function(input, ...) {
     rmarkdown::render(
       input,
-      output_dir = "../outputs/",
-      output_file = paste0(
+       output_dir = "../outputs/",
+        output_file = paste0(
         xfun::sans_ext(input), '_', format(Sys.time(), "%d-%m-%Y_%H%M") , '.html'
       ),
       envir = globalenv()
     )
   })
+params:
+  annotations:
+    true
 ---
 
 <div id = "cookie-banner"></div>
@@ -33,20 +38,20 @@ knitr::opts_chunk$set(
 ```{r setup, warnings = FALSE}
 library(here)
 
-source(paste0(here(), "/code/config.R"))
-source(paste0(here(), "/code/data_prep.R"))
+source(here("code/data_prep.R"))
 ```
 
 <!-- message to rotate screen when width is too low -->
 
-<div data-nics-theme="`r nicstheme`">
-
-`r f_banner()`  <!-- calling the banner code -->
+<div data-nics-theme="`r nics_theme`">
+<!-- define header landmark area for accessibility -->
+<header>
+<!-- calling the banner code -->
+`r f_banner(title = "NISRA Technology and Support Lab RAP Skeleton Demo Report")`
 
 <!-- Header section -->
-
 `r f_header()`
-
+</header>
 
 <!-- Introduction section -->
 
@@ -97,44 +102,12 @@ BT9 5RR
 
 <!-- closing main div -->
 </div>
+<!-- footer landmark area is defined in footer function -->
 
-<!--html_preserve-->
-<!-- Footer section -->
-<footer style="color: #ffffff; background-color: #00205b;">
-	<div class="col-wide" data-analytics="footer">
-		<div class="row">
-			<div class="column left">
-				<footerheading>Links</footerheading>
-				<ul>
-				  <li><a href="https://www.nisra.gov.uk/" class="link" style="color: #ffffff">NISRA</a></li>
-	        <li><a href="https://www.nidirect.gov.uk" class="link" style="color: #ffffff">NIDirect</a></li>
-					<li><a href="https://www.gov.uk/" class="link" style="color: #ffffff">GOV.UK</a></li>
-					<li><a href="https://data.nisra.gov.uk/" class="link" style="color: #ffffff">NISRA Data Portal</a></li>
-					<li><a href="https://build.nisra.gov.uk/" class="link" style="color: #ffffff">Census Flexible Table Builder</a></li>
-				</ul>
-			</div>
-			<div class="column right">
-				<footerheading>Follow NISRA</h3></footerheading>
-				<ul>
-					<li><a href="https://www.facebook.com/nisra.gov.uk" class="link" style="color: #ffffff">Facebook</a></li>
-					<li><a href="https://twitter.com/NISRA" class="link" style="color: #ffffff">X (Twitter)</a></li>
-					<li><a href="https://www.youtube.com/user/nisrastats" class="link" style="color: #ffffff">YouTube</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="flex-list">
-			<ul>
-				<li><a href="https://www.nisra.gov.uk/crown-copyright" class="link" style="color: #ffffff">&copy Crown Copyright</a></li>
-				<li><a href="https://www.nisra.gov.uk/contact" class="link" style="color: #ffffff">Contact us</a></li>
-				<li><a href="https://www.nisra.gov.uk/terms-and-conditions" class="link" style="color: #ffffff">Terms and conditions</a></li>
-				<li><a href="https://www.nisra.gov.uk/cookies" class="link" style="color: #ffffff">Cookies</a></li>
-				<li><a href="https://www.nisra.gov.uk/nisra-privacy-notice" class="link" style="color: #ffffff">Privacy</a></li>
-				<li><a href="https://datavis.nisra.gov.uk/dissemination/accessibility-statement-visualisations.html" class="link" style="color: #ffffff">Accessibility Statement</a></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<!--/html_preserve-->
+
+```{r render-footer, results='asis', echo=FALSE}
+f_footer()
+```
 
 <!-- message to rotate screen if it is below 400px width -->
 <div id="rotate-screen">
@@ -146,9 +119,11 @@ BT9 5RR
   const map_alt = `r if (exists("map_alt")) {map_alt} else {"[]"}`;
 </script>
 
+`r if (params$annotations) '<script id="annotation-script" src="annotation.js"></script>'`
+
 ```{js}
 
-// Function to remove map shapes from tab order, and add tabs to table of contents
+// Accessibility function to remove map shapes from tab order, add tabs to table of contents and add empty alt text to map legend 
 
 function tabOrder() {
 
@@ -162,17 +137,42 @@ function tabOrder() {
   }
   
   // Make side menu tabbable
-
-  var headings = document.getElementsByClassName('tocify-item list-group-item');
+  
+  let headings = document.getElementsByClassName('tocify-item list-group-item');
+  let sections = document.getElementsByClassName('section');
   
   for (let i = 0; i < headings.length; i ++) {
-    headings[i].innerHTML = "<a href='#" + headings[i].getAttribute("data-unique") + "'>" + headings[i].innerHTML +  "</a>";
+    headings[i].innerHTML = "<a href='#" + sections[i].id + "'>" + headings[i].innerHTML +  "</a>";
+  }
+  
+  // Remove white space at bottom
+  const space_observer = new MutationObserver(() => {
+    let space = document.getElementsByClassName("tocify-extend-page");
+    for (let i = 0; i < space.length; i ++) {
+      space[i].remove();
+    }
+  });
+
+  space_observer.observe(document.getElementsByClassName("main-container")[0], { childList: true, subtree: true });
+  
+
+// Hide entire legend from screen readers
+  var legendContainer = document.querySelector('.info.legend');
+  if (legendContainer) {
+    legendContainer.setAttribute('aria-hidden', 'true');
   }
 
-};
+ // Add empty alt text to each legend image
+  var legendImages = document.querySelectorAll('.info.legend img');
+  for (var j = 0; j < legendImages.length; j++) {
+    legendImages[j].setAttribute('alt', '');
+    legendImages[j].setAttribute('aria-hidden', 'true'); // Extra assurance
+  }
+}
 
 // Instruct web browser to run above function when loaded
 window.onload = tabOrder;
+
 ```
 
 

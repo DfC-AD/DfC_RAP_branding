@@ -1,0 +1,72 @@
+---
+title: "07 Download Data Sub Report"
+output: html_document
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = "../demo/demo_outputs/",
+      output_file = paste0(
+        xfun::sans_ext(input), '_', format(Sys.time(), "%d-%m-%Y_%H%M") , '.html'
+      ),
+      envir = globalenv()
+    )
+  })
+---
+
+
+
+```{r, include=FALSE}
+# this chunk sets chunk options for all chunks in this file
+knitr::opts_chunk$set(
+  message = FALSE, echo = FALSE
+)
+
+library(here)
+
+source(here("code/demo/demo_data_prep.R"))
+```
+
+### Download data buttons linked to charts and maps (h3)
+
+In the functions folder the 'make_tables' R Script contains a function called 'f_make_tables' that creates the Excel and CSV download buttons that are under each of the figures in section six. The function generates a hyper-link that sits behind the download button and allows a user to click the button and download data from the corresponding chart into csv or excel format.  
+
+This function can be called after each figure and has 4 parameters fed into it - data (the data frame), title (the title to be given to the downloaded file), data_style (style applied to the excel file - styles can be viewed in the Style.R script) and data_dir (the file path the downloaded files should be stored in - in the example below the file path is set in the demo config file).  
+
+When the download buttons are clicked the excel or csv files are saved out to the 'figdata' folder. For figure 1 the code to call the f_make_tables function can be seen below when you select the show code button:
+
+```{r data_download_example, echo = TRUE}
+# call make tables function to create chart download buttons
+f_make_tables(
+  data = df_fig1_xls,
+  title = fig1_title,
+  data_style = ns_comma,
+  data_dir = here("code/demo/demo_outputs/figdata"),
+)
+```  
+
+### Embed spreadsheet into report (h3)
+
+Another option to include downloadable data in a html report is to embed a spreadsheet into the report by adding a download data button as below. For this option edit and run the demo_excel_tables.R script first to create the required spreadsheet in the demo output folder or add the already prepared spreadsheet to the folder. Using the code below (click on show code) parameters can be set in the embed_file function to set the file path, file name and text to appear on the download button. Run this code to create the download data button with the embedded spreadsheet.
+
+It is not recommended to use this option unless necessary. This is due to the large file sizes of the embedded files. This has the potential to slow the processing and knitting time of the report and generate a html page that is very large and slow to load. Due to the large file sizes of the HTML, it is not possible to attain metrics for the embedded files within the report. It is recommended to host spreadsheets elsewhere and link to them in your HTML. This keeps the HTML file size down for quicker loading and allows metrics to be gathered on the associated spreadsheets.
+
+```{r data_download, echo =TRUE, eval=demo_excel_ready}
+# embeds the spreadsheets
+embexcel <- embed_file(
+  here("code/demo/demo_outputs/RAP_demo_tables.xlsx"),
+  text = "Publication tables: 15KB"
+)
+
+div(
+  div(
+    class = "row", style = "display: flex;",
+    div(class = "row-indent"),
+    div(class = "download", "Download data: ", style = "font-size: 12pt"),
+    div(class = "row-indent"),
+    div(class = "xl-button2", HTML(embexcel)),  # <-- wrap with HTML()
+    div(class = "download", style = "padding-top: 7px; padding-left: 5px;
+        padding-right: 5px;")
+  )
+)
+
+```
