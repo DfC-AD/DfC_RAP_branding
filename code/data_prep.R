@@ -1,6 +1,6 @@
 # Set folder path
 library(here)
-# test
+# testc
 # Read config file
 source(here("code/config.R"))
 
