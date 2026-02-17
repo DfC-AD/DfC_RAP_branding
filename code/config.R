@@ -204,6 +204,13 @@ ons_green <- "#28a197"
 ons_red <- "#801650"
 ons_orange <- "#f46a25"
 
+dfc_colour1 <- "#031f5b"
+dfc_colour2 <- "#7d55c7"
+dfc_colour3 <- "#94a9db"
+dfc_colour4 <- "#7b1f51"
+dfc_colour5 <- "#52a89f"
+dfc_colour6 <- "#3d3d3d"
+
 #### CALL & LOAD FUNCTIONS SCRIPTS ####
 for (file in list.files(path = here("code/functions"))) {
   source(here("code/functions", file))
