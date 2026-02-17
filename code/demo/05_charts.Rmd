@@ -89,7 +89,7 @@ year1_lab <- list(
   ),
   # punctuated and formatted label text
   showarrow = FALSE, # turn off otherwise get line between label and chart
-  font = list(size = 14, color = nisra_blue)
+  font = list(size = 14, color = dfc_colour1)
 )
 
 year2_lab <- list(
@@ -103,7 +103,7 @@ year2_lab <- list(
     round_half_up(tail(ni_pop_total, 1) / 1e6, 2), "m"
   ),
   showarrow = FALSE,
-  font = list(size = 14, color = nisra_blue)
+  font = list(size = 14, color = dfc_colour1)
 )
 # create annotations
 # annotation on vertical line
@@ -112,7 +112,7 @@ note_1 <- list(
   text = "2009",
   showarrow = FALSE, xref = "paper", yref = "paper",
   xanchor = "left", align = "left",
-  font = list(size = 14, color = nisra_navy, family = "Arial black")
+  font = list(size = 14, color = dfc_colour2, family = "Arial black")
 )
 # use annotation rather than y axis title variable for horizontal text
 yaxistitle <- list(
@@ -130,10 +130,10 @@ note_2 <- list(
   text = "Note the non-zero axis",
   showarrow = FALSE, xref = "paper", yref = "paper",
   xanchor = "left", align = "left",
-  font = list(size = 14, color = nisra_navy)
+  font = list(size = 14, color = dfc_colour2)
 )
 # aesthetic definitions for vertical line used in fig1
-vline <- function(x = 0, color = nisra_navy) {
+vline <- function(x = 0, color = dfc_colour2) {
   list(
     type = "line",
     y0 = 0,
@@ -150,7 +150,7 @@ plot_ly(df_annual_pop_tot,
   x = ~mid_year_ending,
   y = ~ni_pop_total,
   name = "Northern Ireland population",
-  line = list(color = nisra_blue),
+  line = list(color = dfc_colour1),
   type = "scatter",
   mode = "line",
   hoverinfo = "text",
@@ -214,7 +214,7 @@ year1_lab <- list(
   ),
   # punctuated and formatted label text
   showarrow = FALSE, # turn off otherwise get line between label and chart
-  font = list(size = 14, color = nisra_blue)
+  font = list(size = 14, color = dfc_colour1)
 )
 
 year2_lab <- list(
@@ -228,7 +228,7 @@ year2_lab <- list(
     round_half_up(tail(ni_pop_total, 1) / 1e6, 2), "m"
   ),
   showarrow = FALSE,
-  font = list(size = 14, color = nisra_blue)
+  font = list(size = 14, color = dfc_colour1)
 )
 # create annotations
 # annotation on vertical line
@@ -237,7 +237,7 @@ note_1 <- list(
   text = "2009",
   showarrow = FALSE, xref = "paper", yref = "paper",
   xanchor = "left", align = "left",
-  font = list(size = 14, color = nisra_navy, family = "Arial black")
+  font = list(size = 14, color = dfc_colour1, family = "Arial black")
 )
 # use annotation rather than y axis title variable for horizontal text
 yaxistitle <- list(
@@ -248,7 +248,7 @@ yaxistitle <- list(
 )
 
 # aesthetic definitions for vertical line used in fig1
-vline <- function(x = 0, color = nisra_navy) {
+vline <- function(x = 0, color = dfc_colour2) {
   list(
     type = "line",
     y0 = 0,
@@ -265,7 +265,7 @@ plot_ly(df_annual_pop_tot,
   x = ~mid_year_ending,
   y = ~ni_pop_total,
   name = "Northern Ireland population",
-  line = list(color = nisra_blue),
+  line = list(color = dfc_colour1),
   type = "scatter",
   mode = "line",
   hoverinfo = "text",
@@ -316,7 +316,7 @@ ggline(df_annual_pop_tot,
   x = "mid_year_ending",
   y = "ni_pop_total",
   plot_type = "l",
-  color = nisra_blue,
+  color = dfc_colour1,
   linetype = "solid",
   size = 1,
   caption = "Note the non-zero axis",
@@ -355,7 +355,7 @@ ggline(df_annual_pop_tot,
       y = ni_pop_total - 7000
     )
   ) +
-  geom_vline(xintercept = 2009, linetype = "dashed", color = nisra_blue) +
+  geom_vline(xintercept = 2009, linetype = "dashed", color = dfc_colour1) +
   annotate("text",
     x = 2009.5, y = 1880000, hjust = 0,
     label = paste(strwrap("2009: Growth rate starts to slow", width = 18),
@@ -468,7 +468,7 @@ fig2 <- ggplot(
 ) +
   geom_line(linewidth = 1) +
   # ACC: Change to line colours with sufficient contrast
-  scale_color_manual(values = c(nisra_blue, nisra_navy)) +
+  scale_color_manual(values = c(dfc_colour1, dfc_colour2)) +
 
 
   # Using NITotals_lab_select_multiple from above to pick the years that will
@@ -561,7 +561,7 @@ ggplot(
     y = population_latest
   )
 ) +
-  geom_line(linewidth = 1, group = 1, color = nisra_blue) +
+  geom_line(linewidth = 1, group = 1, color = dfc_colour1) +
   # ACC: Specify line colour with sufficient contrast
   facet_wrap(vars(str_wrap(lgd2014name, 30)), ncol = 3) +
   # ACC: Use clear and descriptive labels
@@ -627,7 +627,7 @@ fig4_data <- df_mye_latest_year_youthrate %>%
   select(-under25_pop, -lgd_pop_total)
 
 ggplot(fig4_data, aes(x = lgd2014name, y = youthrate)) +
-  geom_bar(fill = nisra_blue, stat = "identity") +
+  geom_bar(fill = dfc_colour1, stat = "identity") +
   geom_text(aes(label = youthrate),
     hjust = 1.5,
     colour = "white", fontface = "bold"
@@ -707,12 +707,12 @@ fig5 <- plot_ly(df_mye_earliest_youthrate,
                 # adds value labels to the bars and sets hover text
                 text = ~earliest_youthrate, textposition = "auto",
                 # sets colour of bars to navy
-                marker = list(color = nisra_navy)
+                marker = list(color = dfc_colour2)
 ) %>%
   layout( # add annotation
     font = list(family = "Arial", size = 14),
     annotations = list(yaxistitle),
-    shapes = list(vline(~ mean(earliest_youthrate), color = nisra_blue)),
+    shapes = list(vline(~ mean(earliest_youthrate), color = dfc_colour1)),
     xaxis = list(title = "Under 25s (%)"),
     yaxis = list(
       title = "",
@@ -774,7 +774,7 @@ fig6 <- ggplot(
 ) +
   geom_col(position = position_dodge()) +
   # colour bars that meet contrast for adjacent colours
-  scale_fill_manual(values = c(nisra_navy, nisra_blue)) +
+  scale_fill_manual(values = c(dfc_colour2, dfc_colour1)) +
   # add value labels, and add thousand separator
   geom_text(aes(label = prettyNum(pop_total, big.mark = ",")),
     position = position_dodge(width = 1), vjust = 1.1,
@@ -822,11 +822,11 @@ df_fig6 <- pivot_wider(df_mye_latest_year_agegrp_gend,
 df_fig6 <- as.data.frame(df_fig6)
 df_fig6 <- gather(df_fig6, key = "variable", value = "value", 2:3)
 
-nisra_blue <- "#3878c5"
-nisra_navy <- "#00205b"
+dfc_colour1 <- "#2E005C"
+dfc_colour2 <- "#C9B3E6"
 
 colormap <- setNames(
-  object = c("#00205b", "#3878c5"),
+  object = c("#C9B3E6", "#2E005C"),
   nm = unique(df_fig6$variable)
 )
 
@@ -948,7 +948,7 @@ config(fig6c, displayModeBar = FALSE)
 fig6d <- plot_ly(df_latest_year_agegrp_gend_pct,
   x = ~Females,
   y = ~age_group,
-  marker = list(color = nisra_navy),
+  marker = list(color = dfc_colour2),
   type = "bar",
   orientation = "h",
   name = "Females",
@@ -959,7 +959,7 @@ fig6d <- plot_ly(df_latest_year_agegrp_gend_pct,
 ) %>%
   add_trace(
     x = ~Males,
-    marker = list(color = nisra_blue),
+    marker = list(color = dfc_colour1),
     name = "Males",
     text = ~ paste0(format(round_half_up(Males, 1), nsmall = 1), "%")
   ) %>%
@@ -1035,8 +1035,8 @@ fig7 <- plot_ly(df_mye_latest_5_agegroups,
   y = ~agegroup_total,
   type = "bar",
   marker = list(color = c(
-    nisra_blue, nisra_navy,
-    nisra_col3_green, nisra_col4_purple, nisra_col5_lilac
+    dfc_colour1, dfc_colour2,
+    dfc_colour3, dfc_colour4, dfc_colour5
   )),
   # order of colours is important: need medium and
   # dark colours beside one another
@@ -1118,7 +1118,7 @@ fig8a <- plot_ly(df_mye_latest_over_under_65,
     "white"
   ))),
   marker = list(
-    colors = c(nisra_col3_green, nisra_navy)
+    colors = c(dfc_colour3, dfc_colour2)
   ),
   textfont = list(color = c("black", "white")),
   showlegend = FALSE
@@ -1151,7 +1151,7 @@ fig8b <- plot_ly(df_mye_latest_over_under_65,
   insidetextfont = list(size = 16),
   insidetextorientation = "horizontal",
   marker = list(
-    colors = c(nisra_col3_green, nisra_navy)
+    colors = c(dfc_colour3, dfc_colour2)
   ),
   # plotly default is grey which is insufficient contrast
   textfont = list(color = c(
@@ -1233,8 +1233,8 @@ fig9 <- plot_ly(df_fig9,
   # set tile colours, border and label colours to meet accessibility standards
   marker = list(
     colors = c(
-      nisra_blue, nisra_navy,
-      nisra_col3_green, nisra_col4_purple, nisra_col5_lilac
+      dfc_colour1, dfc_colour2,
+      dfc_colour3, dfc_colour4, dfc_colour5
     ),
     line = list(color = "black", width = 1)
   ),
@@ -1291,10 +1291,10 @@ fig10 <- plot_ly(
   hoverlabel = list(font = list(color = tmap_textcolours)),
 
   marker = list(colors = c(
-    "white", nisra_green_decoration, nisra_navy, nisra_col9_pink,
-    nisra_col3_green, nisra_col4_purple, nisra_col5_lilac,
-    nisra_col6_olive, nisra_col8_slate, nisra_blue,
-    nista_col10_burgandy
+    "white", dfc_colour1, dfc_colour2, dfc_colour3,
+    dfc_colour4, dfc_colour5, dfc_colour6,
+    dfc_colour7, dfc_colour8, dfc_colour9,
+    dfc_colour10
   )),
   textfont = list(color = tmap_textcolours)
 ) %>%
@@ -1339,10 +1339,10 @@ fig10prev <- plot_ly(
     # ⬇️ put per-tile hover colours HERE (trace-level)
   hoverlabel = list(font = list(color = tmap_textcolours)),
   marker = list(colors = c(
-    "white", nisra_green_decoration, nisra_navy, nisra_col9_pink,
-    nisra_col3_green, nisra_col4_purple, nisra_col5_lilac,
-    nisra_col6_olive, nisra_col8_slate, nisra_blue,
-    nista_col10_burgandy
+    "white", dfc_colour1, dfc_colour2, dfc_colour3,
+    dfc_colour4, dfc_colour5, dfc_colour6,
+    dfc_colour7, dfc_colour8, dfc_colour9,
+    dfc_colour10
   )),
     textfont = list(
     color = tmap_textcolours
@@ -1411,7 +1411,7 @@ fig11 <- plot_ly(df_mye_latest_year_agegroup,
   # specify colours in correct order.
   marker = list(
     colors = c(
-      nisra_blue, nisra_navy, nisra_col3_green, nisra_col4_purple
+      dfc_colour1, dfc_colour2, dfc_colour3, dfc_colour4
     ),
     # border required to ensure contrast between nisra blue and lilac
     line = list(color = "black", width = 1)
@@ -1464,7 +1464,7 @@ plot_ly(fig_12_data,
   add_trace(
     x = as.formula(paste0("~`Males ", latest_year, "`")),
     name = paste("Males", latest_year),
-    marker = list(color = nisra_navy),
+    marker = list(color = dfc_colour2),
     hoverinfo = "text+y",
     hovertext = paste0(
       "Males ", latest_year, ": ",
@@ -1476,7 +1476,7 @@ plot_ly(fig_12_data,
   add_trace(
     x = as.formula(paste0("~`Females ", latest_year, "`")),
     name = paste("Females", latest_year),
-    marker = list(color = nisra_col3_green),
+    marker = list(color = dfc_colour3),
     hoverinfo = "text+y",
     hovertext = paste0(
       "Females ", latest_year, ": ",
@@ -1693,7 +1693,7 @@ fig_14_plot <- plot_ly(
   type = "scatter",
   mode = "none",
   color = ~age_grp_5,
-  fillcolor = nisra_blue,
+  fillcolor = dfc_colour1,
   hoverinfo = "text",
   text = ~ paste(mid_year_ending,
     age_grp_5, paste0(round_half_up(pct, 1), "%"),
@@ -1828,7 +1828,7 @@ plot_ly(fig_15_data_filtered,
         y = ~`Local Government District`,
         type = "bar",
         orientation = "h",
-        marker = list(color = nisra_col3_green),
+        marker = list(color = dfc_colour3),
         name = "Net Migration and Other Changes",
         hoverinfo = "text+x",
         hovertext = ~paste("Net Migration:", `Net Migration & Other Changes`)) %>%
@@ -1836,14 +1836,14 @@ plot_ly(fig_15_data_filtered,
             y = ~`Local Government District`,
             type = "bar",
             orientation = "h",
-            marker = list(color = nisra_navy),
+            marker = list(color = dfc_colour2),
             name = "Natural Change (births minus deaths)",
             hovertext = ~paste("Natural Change:", `Natural Change (births minus deaths)`)) %>%
   add_trace(x = ~`Total Percentage Change`,
             y = ~`Local Government District`,
             type = "scatter",
             mode = "markers",
-            marker = list(color = nisra_blue,
+            marker = list(color = dfc_colour1,
                           size = 9,
                           symbol = "diamond",
                           line = list(color = "#fff", width = 2)),
