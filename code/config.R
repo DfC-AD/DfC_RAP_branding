@@ -204,12 +204,16 @@ ons_green <- "#28a197"
 ons_red <- "#801650"
 ons_orange <- "#f46a25"
 
-dfc_colour1 <- "#031f5b"
-dfc_colour2 <- "#7d55c7"
-dfc_colour3 <- "#94a9db"
-dfc_colour4 <- "#7b1f51"
-dfc_colour5 <- "#52a89f"
-dfc_colour6 <- "#3d3d3d"
+dfc_colour1 <- "#2E005C"
+dfc_colour2 <- "#C9B3E6"
+dfc_colour3 <- "#4A0F86"
+dfc_colour4 <- "#A78ADB"
+dfc_colour5 <- "#003264"
+dfc_colour6 <- "#D8CFF1"
+dfc_colour7 <- "#5B2D91"
+dfc_colour8 <- "#8AB2E6"
+dfc_colour9 <- "#4A4A4A"
+dfc_colour10 <- "#7A7D65"
 
 #### CALL & LOAD FUNCTIONS SCRIPTS ####
 for (file in list.files(path = here("code/functions"))) {
