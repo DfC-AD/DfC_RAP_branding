@@ -1043,7 +1043,7 @@ fig7 <- plot_ly(df_mye_latest_5_agegroups,
   text = ~ format(agegroup_total, big.mark = ","),
   textfont = list(color = c(
     "white", "white",
-    "black", "white", "black"
+    "white", "white", "white"
   )),
   # need to specify black or white labels. plotly default
   # is grey and fails contrast required
@@ -1054,7 +1054,7 @@ fig7 <- plot_ly(df_mye_latest_5_agegroups,
   ),
   hoverlabel = list(font = list(color = c(
     "white", "white",
-    "black", "white", "black"
+    "white", "white", "white"
   )))
 ) %>%
   layout(
@@ -1114,13 +1114,13 @@ fig8a <- plot_ly(df_mye_latest_over_under_65,
   hoverinfo = "text",
   # hover font colour for contrast
   hoverlabel = list(font = list(color = c(
-    "black",
+    "white",
     "white"
   ))),
   marker = list(
     colors = c(dfc_colour3, dfc_colour2)
   ),
-  textfont = list(color = c("black", "white")),
+  textfont = list(color = c("white", "white")),
   showlegend = FALSE
 ) %>%
   # modebar is series of icons and plotly logo linked to plotly site. Turned off
@@ -1155,7 +1155,7 @@ fig8b <- plot_ly(df_mye_latest_over_under_65,
   ),
   # plotly default is grey which is insufficient contrast
   textfont = list(color = c(
-    "black",
+    "white",
     "white"
   )),
   showlegend = FALSE
@@ -1227,7 +1227,7 @@ fig9 <- plot_ly(df_fig9,
   hoverinfo = "text",
   hoverlabel = list(font = list(color = c(
     "white", "white",
-    "black", "white", "black"
+    "white", "white", "white"
   ))),
   branchvalues = "total",
   # set tile colours, border and label colours to meet accessibility standards
@@ -1236,12 +1236,12 @@ fig9 <- plot_ly(df_fig9,
       dfc_colour1, dfc_colour2,
       dfc_colour3, dfc_colour4, dfc_colour5
     ),
-    line = list(color = "black", width = 1)
+    line = list(color = "white", width = 1)
   ),
   textfont = list(family = "Arial", size = 16, color = c(
     "white", "white",
-    "black", "white",
-    "black"
+    "white", "white",
+    "white"
   ))
 )
 
@@ -1276,7 +1276,7 @@ To view the sub-industries in more detail by industry, click on the industry hea
 
 ```{r figure_10, out.width="100%", echo = TRUE}
 
-tmap_textcolours[1] <- "black"
+tmap_textcolours[1] <- "white"
 
 fig10 <- plot_ly(
   type = "treemap",
@@ -1414,12 +1414,12 @@ fig11 <- plot_ly(df_mye_latest_year_agegroup,
       dfc_colour1, dfc_colour2, dfc_colour3, dfc_colour4
     ),
     # border required to ensure contrast between nisra blue and lilac
-    line = list(color = "black", width = 1)
+    line = list(color = "white", width = 1)
   ),
   # specify label colours to meet contrast standards
   textfont = list(
     family = "Arial",
-    color = c("white", "white", "black", "white"),
+    color = c("white", "white", "white", "white"),
     size = 14
   )
 ) %>%
@@ -1517,7 +1517,7 @@ plot_ly(fig_12_data,
     mode = "lines",
     name = paste("Females", latest_year - 10),
     line = list(
-      color = "#2c523b",
+      color = "#D8CFF1",
       width = 4
     ),
     showlegend = TRUE,
