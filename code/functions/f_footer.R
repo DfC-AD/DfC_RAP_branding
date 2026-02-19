@@ -38,25 +38,25 @@ f_footer <- function() {
         </ul>
       </div>
       <div class="footer-col">
-        <h3 style="color: #fff; font-size: 16px; font-weight: bold; margin-top: 0px">Follow NISRA</h3>
+        <h3 style="color: #fff; font-size: 16px; font-weight: bold; margin-top: 0px">Follow DfC</h3>
         <ul class="footer-social">
           <li>
-            <a href="https://www.facebook.com/nisra.gov.uk">
+            <a href="https://www.facebook.com/CommunitiesNI/">
               <img src="%s" title="Facebook" role="img" class="img" />
             </a>
           </li>
           <li>
-            <a href="https://x.com/NISRA/">
+            <a href="https://x.com/communitiesni">
                <img src="%s" title="Twitter/X" role="img" class="img" />
             </a>
           </li>
           <li>
-            <a href="https://www.youtube.com/user/nisrastats">
+            <a href="https://www.youtube.com/channel/UCnPPCl7bD3P1AmiVcSSJ9zA/videos">
                <img src="%s" title="YouTube" role="img" class="img" />
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/company/northern-ireland-statistics-and-research-agency/">
+            <a href="https://www.linkedin.com/company/department-for-communities/">
               <img src="%s" title="LinkedIn" role="img" class="img" />
             </a>
           </li>
@@ -66,13 +66,13 @@ f_footer <- function() {
 
     <!-- Horizontal list with separators -->
     <ul class="footer-links">
-      <li><a href="https://www.nisra.gov.uk/crown-copyright">© Crown Copyright</a></li>
+      <li><a href="https://www.communities-ni.gov.uk/articles/crown-copyright-communities">© Crown Copyright</a></li>
       <li>|</li>
-      <li><a href="https://www.nisra.gov.uk/terms-and-conditions">Terms and conditions</a></li>
+      <li><a href="https://www.communities-ni.gov.uk/articles/terms-and-conditions-communities">Terms and conditions</a></li>
       <li>|</li>
-      <li><a href="https://www.nisra.gov.uk/cookies">Cookies</a></li>
+      <li><a href="https://www.communities-ni.gov.uk/articles/cookies-communities">Cookies</a></li>
       <li>|</li>
-      <li><a href="https://www.nisra.gov.uk/nisra-privacy-notice">Privacy</a></li>
+      <li><a href="https://www.communities-ni.gov.uk/articles/your-privacy-communities">Privacy</a></li>
       <li>|</li>
       <li><a href="https://datavis.nisra.gov.uk/dissemination/accessibility-statement-visualisations.html">Accessibility Statement</a></li>
     </ul>

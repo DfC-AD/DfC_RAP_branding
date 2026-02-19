@@ -780,8 +780,8 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
 	bottom: 55px;
 	right: 10px;
 	padding: 10px;
-	background-color: #A78ADB;
-	color: #00205b;
+	background-color: #2E005C;
+	color: #fff;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
@@ -802,7 +802,7 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
 
 .ybaannotation {
 	position: absolute;
-	background-color: #2E005C;
+	background-color: #D8CFF1;
 	border: 2px solid #000;
 	border-radius: 5px;
 	padding: 10px;
