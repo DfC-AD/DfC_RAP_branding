@@ -194,8 +194,8 @@ Department of Infrastructure:
   --nics-three-bar-colour-2: var(--nics-banner-highlight);
   --nics-three-bar-colour-3: var(--nics-banner-bg);
   
-  --nics-download-button-1: var(--nics-banner-bg);
-  --nics-download-button-2: var(--nics-banner-highlight);
+  --nics-download-button-1: #2E005C;
+  --nics-download-button-2: #C9B3E6;
 
   --nics-chart-dark: var(--nics-banner-bg);
   --nics-chart-light: var(--nics-banner-highlight);
@@ -700,7 +700,7 @@ ul.tocify-subheader.list-group {
 	color:#FFF;
 	padding: 10px;
 	text-align: left;
-	border-bottom: 5px solid #3878c5;
+	border-bottom: 5px solid #C9B3E6;
 	z-index: 100;
 }
 
@@ -780,7 +780,7 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
 	bottom: 55px;
 	right: 10px;
 	padding: 10px;
-	background-color: #68a41e;
+	background-color: #A78ADB;
 	color: #00205b;
 	border: none;
 	border-radius: 4px;
@@ -792,7 +792,7 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
 	bottom: 10px;
 	right: 10px;
 	padding: 10px;
-	background-color: #3878c5;
+	background-color: #C9B3E6;
 	color: #00205b;
 	border: none;
 	border-radius: 4px;
@@ -802,7 +802,7 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
 
 .ybaannotation {
 	position: absolute;
-	background-color: #CEDC20;
+	background-color: #2E005C;
 	border: 2px solid #000;
 	border-radius: 5px;
 	padding: 10px;
@@ -817,7 +817,7 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
   display: flex;
   background-color: #E7EAF1;
   border-radius: 25px;
-  border: 2px solid #00205b;
+  border: 2px solid #C9B3E6;
   font-weight: normal !important;
   border-radius: 25px;
   text-align: center;
@@ -885,7 +885,7 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
   width: 100%; 
   text-align: left; 
   background: #e7eaf1; 
-  color: #3878c5; 
+  color: #7d55c7; 
   border: none; 
   outline: none; 
   padding: 1em; 
@@ -941,7 +941,7 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
 .nisra-footer {
   background-color: #002147;
   color: #fff;
-  border-top: 4px solid #3878c5;
+  border-top: 4px solid #7d55c7;
   padding: 2rem 0;
   margin-top: auto;
   font-family: Arial, sans-serif;
