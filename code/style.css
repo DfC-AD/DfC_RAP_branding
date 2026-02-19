@@ -834,8 +834,8 @@ a.cookies-infobar_btn, a.cookies-infobar_btn_reject, a.cookiesbarlink {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #D0E7A6; /* or your blue */
-  border: 2px solid #68a41e;
+  background-color: #A78ADB; /* or your blue */
+  border: 2px solid #5B2D91;
   border-radius: 50%;
   text-align: center;
 

@@ -707,12 +707,12 @@ fig5 <- plot_ly(df_mye_earliest_youthrate,
                 # adds value labels to the bars and sets hover text
                 text = ~earliest_youthrate, textposition = "auto",
                 # sets colour of bars to navy
-                marker = list(color = dfc_colour2)
+                marker = list(color = dfc_colour1)
 ) %>%
   layout( # add annotation
     font = list(family = "Arial", size = 14),
     annotations = list(yaxistitle),
-    shapes = list(vline(~ mean(earliest_youthrate), color = dfc_colour1)),
+    shapes = list(vline(~ mean(earliest_youthrate), color = dfc_colour2)),
     xaxis = list(title = "Under 25s (%)"),
     yaxis = list(
       title = "",
@@ -774,7 +774,7 @@ fig6 <- ggplot(
 ) +
   geom_col(position = position_dodge()) +
   # colour bars that meet contrast for adjacent colours
-  scale_fill_manual(values = c(dfc_colour2, dfc_colour1)) +
+  scale_fill_manual(values = c(dfc_colour1, dfc_colour2)) +
   # add value labels, and add thousand separator
   geom_text(aes(label = prettyNum(pop_total, big.mark = ",")),
     position = position_dodge(width = 1), vjust = 1.1,

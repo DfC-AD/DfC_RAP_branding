@@ -67,7 +67,7 @@ map1_static_map <- tm_shape(df_map_data,
     style = "quantile",
     # Colour palette. Execute the command tmaptools::palette_explorer() in R
     # console to see range of options
-    palette = "Blues",
+    palette = "Purples",
     # Add transparency to polygons improving contrast with text
     alpha = 0.5,
     legend.show = FALSE,
@@ -84,7 +84,7 @@ map1_static_map <- tm_shape(df_map_data,
     ymod = "ymod"
   ) +
   tm_add_legend("fill",
-    fill = RColorBrewer::brewer.pal(3, "Blues"),
+    fill = RColorBrewer::brewer.pal(3, "Purples"),
     border.col = "#454A58",
     labels = c("26.6  to 29.5", "29.6 to 31.5", "31.6 to 33.5"),
     title = "Percentage of under 25s"
@@ -154,7 +154,7 @@ map2_interactive_map <- tm_shape(
     # Quantiles gives even sized groupings
     style = "quantile",
     # Colour palette
-    palette = "Blues",
+    palette = "Purples",
     # Add transparency to polygons improving contrast with text
     alpha = 0.5,
     border.alpha = 1,
@@ -162,7 +162,7 @@ map2_interactive_map <- tm_shape(
     popup.vars = c("Percentage of under 25s: " = "lgd_young_perc")
   ) +
   tm_add_legend("fill",
-    fill = RColorBrewer::brewer.pal(3, "Blues"),
+    fill = RColorBrewer::brewer.pal(3, "Purples"),
     border.col = "#454A58",
     labels = c("26.6  to 29.5", "29.6 to 31.5", "31.6 to 33.5"),
     title = "Percentage of under 25s"
@@ -232,7 +232,7 @@ map3_interactive_map <- leaflet(options = leafletOptions(
 
 map3_interactive_map <- addCircleMarkers(
   map = map3_interactive_map, data = df_jbo, lng = ~Longitude, lat = ~Latitude,
-  color = "blue",
+  color = dfc_colour1,
   radius = 10,
   label = lapply(paste0(
     df_jbo$JBO, ": ", df_jbo$Vacancies,

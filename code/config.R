@@ -6,7 +6,7 @@
 
 # Set Report parameters, name of department, pre release status and logo type
 
-nics_theme <- "dof"
+nics_theme <- "dfc"
 prerelease <- FALSE
 bilingual <- TRUE
 
@@ -43,10 +43,10 @@ next_pub_date <- "10 June 2025"
 # function and appear at the bottom of the report above the footer
 
 header_publisher <-
-  "Dissemination Branch, Northern Ireland Statistics and Research Agency"
+  "Analytics Division"
 lead_statistician <- "John Smith"
 header_telephone <- "028 XX XXXXXX"
-header_email <- "contact@nisra.gov.uk"
+header_email <- "analyticsdivision@communities-ni.gov.uk"
 
 
 #### INSTALL PACKAGES  ####
