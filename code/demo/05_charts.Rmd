@@ -1035,8 +1035,7 @@ fig7 <- plot_ly(df_mye_latest_5_agegroups,
   y = ~agegroup_total,
   type = "bar",
   marker = list(color = c(
-    dfc_colour1, dfc_colour2,
-    dfc_colour3, dfc_colour4, dfc_colour5
+    dfc_colour1, dfc_colour2, dfc_colour3, dfc_colour4, dfc_colour5
   )),
   # order of colours is important: need medium and
   # dark colours beside one another
