@@ -204,16 +204,16 @@ ons_green <- "#28a197"
 ons_red <- "#801650"
 ons_orange <- "#f46a25"
 
-dfc_colour1 <- "#3B0A57" #16.52 white background 1->2: 5.4:1
-dfc_colour2 <- "#0B7285" #4.55 white background 2->3: 4.8:1
-dfc_colour3 <- "#1A1A2E" #10.31 white background 3->4: 5.6:1
-dfc_colour4 <- "#6D28D9" #4.53 white background 4->5: 4.9:1
-dfc_colour5 <- "#004E64" #12.8 white background 5->6: 5.1:1
-dfc_colour6 <- "#4C1D95" #4.57 white background 6->7: 4.7:1
-dfc_colour7 <- "#374151" #8.71 white background 7->8: 4.6:1
-dfc_colour8 <- "#005F73" #4.6 white background 8->9: 4.8:1
-dfc_colour9 <- "#1E2A8A" #8.86 white background 9->10: 5.2:1
-dfc_colour10 <- "#111827" #4.54 white background
+dfc_colour1 <- "#00205C" #16.52 white background 1->2: 5.4:1
+dfc_colour2 <- "#7C868D" #4.55 white background 2->3: 4.8:1
+dfc_colour3 <- "#2D2A26" #10.31 white background 3->4: 5.6:1
+dfc_colour4 <- "#008BAC" #4.53 white background 4->5: 4.9:1
+dfc_colour5 <- "#124834" #12.8 white background 5->6: 5.1:1
+dfc_colour6 <- "#E01783" #4.57 white background 6->7: 4.7:1
+dfc_colour7 <- "#A91C8E" #8.71 white background 7->8: 4.6:1
+dfc_colour8 <- "#0075C9" #4.6 white background 8->9: 4.8:1
+dfc_colour9 <- "#7F56C5" #8.86 white background 9->10: 5.2:1
+dfc_colour10 <- "#CD3363" #4.54 white background
 
 
 
