@@ -822,11 +822,9 @@ df_fig6 <- pivot_wider(df_mye_latest_year_agegrp_gend,
 df_fig6 <- as.data.frame(df_fig6)
 df_fig6 <- gather(df_fig6, key = "variable", value = "value", 2:3)
 
-dfc_colour1 <- "#2E005C"
-dfc_colour2 <- "#C9B3E6"
 
 colormap <- setNames(
-  object = c("#C9B3E6", "#2E005C"),
+  object = c("#00205C", "#7C868D"),
   nm = unique(df_fig6$variable)
 )
 
@@ -1117,7 +1115,7 @@ fig8a <- plot_ly(df_mye_latest_over_under_65,
     "white"
   ))),
   marker = list(
-    colors = c(dfc_colour3, dfc_colour2)
+    colors = c(dfc_colour1, dfc_colour2)
   ),
   textfont = list(color = c("white", "white")),
   showlegend = FALSE
@@ -1150,7 +1148,7 @@ fig8b <- plot_ly(df_mye_latest_over_under_65,
   insidetextfont = list(size = 16),
   insidetextorientation = "horizontal",
   marker = list(
-    colors = c(dfc_colour3, dfc_colour2)
+    colors = c(dfc_colour1, dfc_colour2)
   ),
   # plotly default is grey which is insufficient contrast
   textfont = list(color = c(
