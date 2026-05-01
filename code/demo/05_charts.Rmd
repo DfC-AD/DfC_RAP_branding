@@ -1492,7 +1492,7 @@ plot_ly(fig_12_data,
     mode = "lines",
     name = paste("Males", latest_year - 10),
     line = list(
-      color = "#00b0f0",
+      color = dfc_colour1,
       width = 4
     ),
     showlegend = TRUE,
@@ -1514,7 +1514,7 @@ plot_ly(fig_12_data,
     mode = "lines",
     name = paste("Females", latest_year - 10),
     line = list(
-      color = "#D8CFF1",
+      color = "dfc_colour4",
       width = 4
     ),
     showlegend = TRUE,
