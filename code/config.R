@@ -165,7 +165,7 @@ nisra_alt <- "NISRA logo, links to NISRA homepage"
 dep_logo <- encodeURIComponent(
   paste0(
     here(), "/data/images/dept_logos/logo-white-unstacked-",
-    nics_theme, ".svg"
+    nics_theme, ".png"
   )
 )
 dep_alt <- paste(toupper(nics_theme), "logo, links to ", toupper(nics_theme), "homepage")
