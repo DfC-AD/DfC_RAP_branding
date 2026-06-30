@@ -49,14 +49,14 @@ df_myes <- mutate(df_myes,
     age <= 24 ~ "0-24",
     age >= 25 & age <= 44 ~ "25-44",
     age >= 45 & age <= 64 ~ "45-64",
-    age >= 65 ~ "65plus"
+    age >= 65 ~ "65 plus"
   ),
   age_grp_5 = case_when(
     age <= 24 ~ "0-24",
     age >= 25 & age <= 44 ~ "25-44",
     age >= 45 & age <= 64 ~ "45-64",
     age >= 65 & age <= 84 ~ "65-84",
-    age >= 85 ~ "85plus"
+    age >= 85 ~ "85 plus"
   )
 )
 

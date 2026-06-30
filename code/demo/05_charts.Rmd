@@ -682,7 +682,7 @@ When resized for mobile the bars shorten but the labels remain a more readable s
 
 Include descriptive text before or after the chart highlighting the key message.
 
-#### Figure 5: Proportion of under 25s was higher in `r earliest_year`.
+#### Figure 5: Proportion of under 25s was higher in `r earliest_year`
 ##### Percentage of population aged under 25 by LGD, `r earliest_year` MYEs
 
 Dashed line represents Northern Ireland mean.
@@ -1205,7 +1205,7 @@ Borders are used around the tiles to ensure the contrast requirements are met. A
 
 Include descriptive text before or after the chart.
 
-#### Figure 9: Females aged 0-24 make up the largest age group in NI.
+#### Figure 9: Females aged 0-24 make up the largest age group in NI
 ##### Female population of Northern Ireland by age group, `r latest_year`
 
 ```{r treemap, echo = TRUE, warnings = FALSE, message = FALSE, fig.alt="Figure 9 alt text example. More detail on the trends are included in the text directly above or below the chart, and data can be downloaded using the button below", out.width="100%"}
